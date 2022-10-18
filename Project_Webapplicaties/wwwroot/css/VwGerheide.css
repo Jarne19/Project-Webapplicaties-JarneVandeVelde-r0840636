@@ -1,0 +1,22 @@
+﻿.size {
+    font-size: 20px;
+}
+.color {
+    background: #FF2E2E;
+}
+.nav-text {
+    color: #fff !important;
+}
+.footer-color {
+    background: #474747;
+    border-top-color: #ff2e2e;
+}
+.red-text {
+    color: #ff2e2e;
+}
+.center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

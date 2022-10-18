@@ -3,43 +3,81 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Project_Webapplicaties</title>
+    <title>@ViewData["Title"] - VW Gerheide</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/VwGerheide.css" />
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="~/img/LogoVwGerheide.png">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Project_Webapplicaties</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <nav class="navbar navbar-expand-md navbar-dark color">
+        <div class="container size">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/LogoVwGerheide.png" height="85" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link nav-text ml-2 " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Spelers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top footer-color">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h6 class="red-text"> Vw Gerheide</h6>
+                    <p class="nav-text">Gerheide (Kapel)<br/>2490 Balen</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="mb-5" src="/img/LogoVwGerheide.png" height="85"/>
+                </div>
+                <div class="col-md-2 align-items-lg-end">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Teams</a>
+                        </li>
+                        <li>
+                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Spelers</a>
+                        </li>
+                        <li>
+                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
+                        </li>
+                        <li>
+                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Project_Webapplicaties - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <p class="text-lg-center nav-text">&copy; 2022 VW Gerheide</p>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
