@@ -10,5 +10,6 @@ namespace Project_Webapplicaties.Models
 
         public ICollection<Player> Players { get; set; }
         public ICollection<TeamSponsor> TeamSponsors { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }
