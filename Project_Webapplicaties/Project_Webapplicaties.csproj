@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\UnitOfWork\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
