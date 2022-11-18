@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.Repository;
 using Project_Webapplicaties.Data.Repository.Interfaces;
+using Project_Webapplicaties.Data.UnitOfWork;
+using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
 using Project_Webapplicaties.Models;
 
 namespace Project_Webapplicaties
@@ -33,6 +35,7 @@ namespace Project_Webapplicaties
                 options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IGenericRepository<Player>, GenericRepository<Player>>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
