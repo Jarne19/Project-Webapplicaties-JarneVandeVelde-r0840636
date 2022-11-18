@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Project_Webapplicaties.Data;
 
 namespace Project_Webapplicaties
 {
@@ -24,6 +26,8 @@ namespace Project_Webapplicaties
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<VwGerheideContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
