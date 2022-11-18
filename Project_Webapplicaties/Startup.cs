@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Data;
+using Project_Webapplicaties.Data.Repository;
+using Project_Webapplicaties.Data.Repository.Interfaces;
 
 namespace Project_Webapplicaties
 {
@@ -28,6 +30,7 @@ namespace Project_Webapplicaties
             services.AddControllersWithViews();
             services.AddDbContext<VwGerheideContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
