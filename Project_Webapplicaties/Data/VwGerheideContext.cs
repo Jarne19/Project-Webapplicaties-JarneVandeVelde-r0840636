@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Models;
 
 namespace Project_Webapplicaties.Data
 {
-    public class VwGerheideContext : DbContext
+    public class VwGerheideContext : IdentityDbContext<IdentityUser>
     {
         public VwGerheideContext(DbContextOptions<VwGerheideContext> options):base(options) { }
 
@@ -16,6 +18,7 @@ namespace Project_Webapplicaties.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Player>().ToTable("Player");
             modelBuilder.Entity<Game>().ToTable("Game");
             modelBuilder.Entity<Referee>().ToTable("Referee");

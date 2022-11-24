@@ -11,10 +11,13 @@ namespace Project_Webapplicaties.Controllers
         private readonly IUnitOfWork _uow;
 
         public AdminController(IUnitOfWork uow) { _uow = uow; }
+
         public IActionResult Index()
         {
             return View();
         }
+
+        #region Create,Delete,Update Player
 
         public IActionResult AddPlayer()
         {
@@ -50,11 +53,16 @@ namespace Project_Webapplicaties.Controllers
         public async Task<ActionResult<Player>> DeletePlayer(int id)
         {
             Player player = await _uow.PlayerRepository.GetById(id);
-            if(player == null) return NotFound();
+            if (player == null) return NotFound();
             _uow.PlayerRepository.Delete(player);
             await _uow.Save();
             return RedirectToAction("Index");
         }
+
+        #endregion
+        
+
+
 
     }
 }

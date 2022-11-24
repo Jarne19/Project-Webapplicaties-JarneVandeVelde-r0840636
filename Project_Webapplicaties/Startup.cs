@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.Repository;
@@ -33,6 +34,35 @@ namespace Project_Webapplicaties
             services.AddControllersWithViews();
             services.AddDbContext<VwGerheideContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<VwGerheideContext>();
+            services.AddRazorPages();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+
+
+
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IGenericRepository<Player>, GenericRepository<Player>>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -56,6 +86,7 @@ namespace Project_Webapplicaties
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
