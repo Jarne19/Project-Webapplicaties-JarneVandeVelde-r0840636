@@ -1,5 +1,5 @@
 ﻿.size {
-    font-size: 20px;
+    height: 50px;
 }
 .color {
     background: #FF2E2E;
@@ -28,4 +28,5 @@
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
     opacity: 0.9;
+/*    filter: blur(4px);*/
 }

@@ -1,10 +1,10 @@
 ﻿@model Project_Webapplicaties.ViewModels.AddPlayerViewModel
 @{
-    ViewData["Title"] = "Add Player";
+    ViewData["Title"] = "Speler toevoegen";
 }
 <div class="jumbotron footer-color">
     <div class="container ">
-        <h3 class="nav-text">Add player</h3>
+        <h3 class="nav-text">Speler toevoegen</h3>
     </div>
 </div>
 
@@ -57,34 +57,34 @@
                 <form asp-action="AddPlayer">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label asp-for="Firstname">Firstname</label>
+                            <label asp-for="Firstname">Voornaam</label>
                             <input asp-for="Firstname" class="form-control">
                             <span asp-validation-for="Firstname" class="text-danger"></span>
                             <br/>
-                            <label asp-for="Name">Name</label>
+                            <label asp-for="Name">Naam</label>
                             <input asp-for="Name" class="form-control">
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label asp-for="Age">Age</label>
+                            <label asp-for="Age">Leeftijd</label>
                             <input asp-for="Age" class="form-control">
                             <span asp-validation-for="Age" class="text-danger"></span>
                             <br/>
-                            <label asp-for="Birthdate">Birth date</label>
+                            <label asp-for="Birthdate">Geboortedatum</label>
                             <input asp-for="Birthdate" class="form-control">
                             <span asp-validation-for="Birthdate" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label asp-for="PastDetails">Past details</label>
+                            <label asp-for="PastDetails">Details over het verleden</label>
                             <textarea asp-for="PastDetails" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="PastDetails" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label asp-for="BestLeg">Best leg</label>
+                            <label asp-for="BestLeg">Beste been</label>
                             <select asp-for="BestLeg" class="form-control">
                                 <option selected>Choose...</option>
-                                <option>Left</option>
-                                <option>Right</option>
+                                <option>Links</option>
+                                <option>Rechts</option>
                             </select>
                             <span asp-validation-for="BestLeg" class="text-danger"></span>
                         </div>
@@ -94,16 +94,16 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="Goedgekeurd">Add player</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <h5 class="modal-title" id="Goedgekeurd">Speler toevoegen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Sluiten">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Player has been added!
+                                        Speler is toegevoegd!
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                                     </div>
                                 </div>
                             </div>
