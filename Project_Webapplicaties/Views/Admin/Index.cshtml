@@ -1,4 +1,8 @@
-﻿<div class="jumbotron footer-color">
+﻿@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="jumbotron footer-color">
     <div class="container ">
         <h3 class="nav-text">Admin</h3>
     </div>
@@ -17,32 +21,32 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link">
                 Team Toevoegen
             </a>
           </li>
           <li class="nav-item">
-            <a asp-controller="Admin" asp-action="AddPlayer" class="nav-link" href="#">
+            <a asp-controller="Admin" asp-action="AddPlayer" class="nav-link">
                 Speler Toevoegen
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link">
                 Sponsor Toevoegen
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link">
                 Team Verwijderen/Updaten
             </a>
           </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link">
                     Player Verwijderen/Updaten
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link">
                     Sponsor Verwijderen/Updaten
                 </a>
             </li>
@@ -57,7 +61,7 @@
         <h3 class="text-center mt-4">Welkom admin!</h3>
         <h5 class="text-center">Maak je keuze wat je wilt doen.
         </h5>
-        <img class="center-img mt-4" src="img/LogoVwGerheide.png" />
+        <img class="center-img mt-4" src="img/LogoVwGerheide.png"/>
     </main>
   </div>
 </div>

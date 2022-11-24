@@ -1,5 +1,120 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Project_Webapplicaties.ViewModels.AddPlayerViewModel
 @{
+    ViewData["Title"] = "Add Player";
+}
+<div class="jumbotron footer-color">
+    <div class="container ">
+        <h3 class="nav-text">Add player</h3>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-action="Index">
+                            <span data-feather="home"></span>
+                            Admin 
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Team Toevoegen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="AddPlayer" class="nav-link">
+                            Speler Toevoegen <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Sponsor Toevoegen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Team Verwijderen/Updaten
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Player Verwijderen/Updaten
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Sponsor Verwijderen/Updaten
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <form asp-action="AddPlayer">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Firstname">Firstname</label>
+                            <input asp-for="Firstname" class="form-control">
+                            <span asp-validation-for="Firstname" class="text-danger"></span>
+                            <br/>
+                            <label asp-for="Name">Name</label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Age">Age</label>
+                            <input asp-for="Age" class="form-control">
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                            <br/>
+                            <label asp-for="Birthdate">Birth date</label>
+                            <input asp-for="Birthdate" class="form-control">
+                            <span asp-validation-for="Birthdate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="PastDetails">Past details</label>
+                            <textarea asp-for="PastDetails" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="PastDetails" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="BestLeg">Best leg</label>
+                            <select asp-for="BestLeg" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>Left</option>
+                                <option>Right</option>
+                            </select>
+                            <span asp-validation-for="BestLeg" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" value="AddPlayer" data-toggle="modal" data-target="#Goedgekeurd" class="btn btn-primary">Aanmaken</button>
+                    <div class="modal fade" id="Goedgekeurd" tabindex="-1" aria-labelledby="Goedgekeurd" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="Goedgekeurd">Add player</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Player has been added!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
