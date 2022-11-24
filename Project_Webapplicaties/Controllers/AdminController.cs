@@ -26,7 +26,7 @@ namespace Project_Webapplicaties.Controllers
         {
             _uow.PlayerRepository.Create(player);
             await _uow.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("AddPlayer");
         }
 
         [HttpGet]
