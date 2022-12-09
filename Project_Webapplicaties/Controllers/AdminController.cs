@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Data.Repository.Interfaces;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
 using Project_Webapplicaties.Models;
@@ -27,11 +29,10 @@ namespace Project_Webapplicaties.Controllers
         {
             return View();
         }
-        public IActionResult EditOrDeletePlayer()
+        public async Task<ActionResult<IEnumerable<Player>>> EditOrDeletePlayer()
         {
-            PlayerListViewModel viewModel = new PlayerListViewModel();
-            viewModel.Players = _uow.PlayerRepository.GetAll().ToList();
-            return View(viewModel);
+            var player = await _uow.PlayerRepository.GetAll().ToListAsync();
+            return View(player);
         }
 
         [HttpPost]
@@ -56,7 +57,7 @@ namespace Project_Webapplicaties.Controllers
             if (id != player.PlayerId) return BadRequest();
             _uow.PlayerRepository.Update(player);
             await _uow.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("EditOrDeletePlayer");
         }
 
         [HttpGet]
@@ -66,7 +67,7 @@ namespace Project_Webapplicaties.Controllers
             if (player == null) return NotFound();
             _uow.PlayerRepository.Delete(player);
             await _uow.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("EditOrDeletePlayer");
         }
 
         #endregion
