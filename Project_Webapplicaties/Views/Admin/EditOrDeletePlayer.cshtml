@@ -1,5 +1,4 @@
-﻿@using static Project_Webapplicaties.ViewModels.PlayerDetailsViewModel
-@model Project_Webapplicaties.ViewModels.PlayerListViewModel
+﻿@model List<Player>
 
 @{
     ViewData["Title"] = "Speler aanpassen of verwijderen";
@@ -61,7 +60,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.Players)
+                    @foreach (var item in Model)
                     {
                         <tr>
                             <td>
