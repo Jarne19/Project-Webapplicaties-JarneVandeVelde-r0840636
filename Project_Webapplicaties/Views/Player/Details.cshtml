@@ -1,0 +1,41 @@
+﻿@model Project_Webapplicaties.ViewModels.PlayerDetailsViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Firstname} {Model.Name}";
+}
+<div class="jumbotron-img2">
+    <div class="container shadoww">
+        <div class="row">
+            <div class="col">
+                <img src="~/img/Player.jpg" class="card-img-top mt-5 mb-5 card-img"  alt="@Model.Firstname @Model.Name">
+            </div>
+            <div class="col mt-5 mb-5">
+                <h2>@Model.Firstname @Model.Name</h2>
+                <h3>@Model.Age Jaar</h3>
+                <p>@Model.PastDetails</p>
+                <div class="card mt-3">
+                    <div class="card-header blue-text">
+                        <b>Informatie</b>
+                    </div>
+                    <table class="table table-bordered m-3">
+                        <tbody>
+                            <tr>
+                                <td><b>Beste been</b></td>
+                                <td>@Model.BestLeg</td>
+                            </tr>
+                            <tr>
+                                <td><b>Geboortedatum</b></td>
+                                <td>@Model.Birthdate</td>
+                            </tr>
+                            <tr>
+                                <td><b>Ploeg</b></td>
+                                <td>@Model.PloegId</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a class="btn btn-danger mt-3 nav-text" asp-controller="Player" asp-action="Index">Terug</a>
+            </div>
+        </div>
+    </div>
+</div>

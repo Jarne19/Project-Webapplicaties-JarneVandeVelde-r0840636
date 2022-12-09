@@ -1,5 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Project_Webapplicaties.ViewModels.PlayerListViewModel
 @{
+    ViewData["Title"] = "Spelers";
 }
+<div class="jumbotron-img2">
+    <div class="container shadoww">
+        <h3 class="mb-5 display-4">Spelers</h3>
+        <div class="row">
+            @foreach (var item in Model.Players)
+            {
+                <div class="col-sm m-2 mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <img src="~/img/Player.jpg" class="card-img-top" alt="..." height="250">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.Age Jaar</h5>
+                            <p class="card-text">@item.PastDetails</p>
+                            <hr/>
+                            <a class="btn btn-danger" asp-controller="Player" asp-action="Details" asp-route-id="@item.PlayerId">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
