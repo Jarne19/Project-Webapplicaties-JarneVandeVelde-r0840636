@@ -2,12 +2,6 @@
 @{
     ViewData["Title"] = "Speler toevoegen";
 }
-<div class="jumbotron footer-color">
-    <div class="container ">
-        <h3 class="nav-text">Speler toevoegen</h3>
-    </div>
-</div>
-
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -40,7 +34,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a asp-controller="Admin" asp-action="EditOrDeletePlayer" class="nav-link">
                             Player Verwijderen/Updaten
                         </a>
                     </li>
@@ -50,13 +44,14 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div>  
         </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
+            <div class=" pt-3 pb-2 m-5 shadoww">
+                <h3 class="mb-5 display-4">Speler toevoegen</h3>
                 <form asp-action="AddPlayer">
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6 ">
                             <label asp-for="Firstname">Voornaam</label>
                             <input asp-for="Firstname" class="form-control">
                             <span asp-validation-for="Firstname" class="text-danger"></span>
@@ -71,7 +66,7 @@
                             <span asp-validation-for="Age" class="text-danger"></span>
                             <br/>
                             <label asp-for="Birthdate">Geboortedatum</label>
-                            <input asp-for="Birthdate" class="form-control">
+                            <input asp-for="Birthdate" type="date" class="form-control">
                             <span asp-validation-for="Birthdate" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
@@ -89,25 +84,7 @@
                             <span asp-validation-for="BestLeg" class="text-danger"></span>
                         </div>
                     </div>
-                    <button type="submit" value="AddPlayer" data-toggle="modal" data-target="#Goedgekeurd" class="btn btn-primary">Aanmaken</button>
-                    <div class="modal fade" id="Goedgekeurd" tabindex="-1" aria-labelledby="Goedgekeurd" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="Goedgekeurd">Speler toevoegen</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Sluiten">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Speler is toegevoegd!
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <button type="submit" value="AddPlayer" data-toggle="modal" data-target="#Goedgekeurd" class="btn btn-danger mt-3">Aanmaken</button>
                 </form>
             </div>
         </main>

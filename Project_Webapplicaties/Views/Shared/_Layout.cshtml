@@ -28,7 +28,7 @@
                         <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Team" asp-action="Index">Teams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Spelers</a>
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
@@ -36,6 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
                     </li>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -43,7 +49,7 @@
 <main role="main" >
             @RenderBody()
         </main>
-<footer class="pt-4 my-md-5 pt-md-5 border-top footer-color">
+<footer class="pt-4  footer-color">
         <div class="container">
             <div class="row">
                 <div class="col-md-5">

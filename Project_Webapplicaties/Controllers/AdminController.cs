@@ -1,11 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project_Webapplicaties.Data.Repository.Interfaces;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
 using Project_Webapplicaties.Models;
+using Project_Webapplicaties.ViewModels;
 
 namespace Project_Webapplicaties.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IUnitOfWork _uow;
@@ -22,6 +26,12 @@ namespace Project_Webapplicaties.Controllers
         public IActionResult AddPlayer()
         {
             return View();
+        }
+        public IActionResult EditOrDeletePlayer()
+        {
+            PlayerListViewModel viewModel = new PlayerListViewModel();
+            viewModel.Players = _uow.PlayerRepository.GetAll().ToList();
+            return View(viewModel);
         }
 
         [HttpPost]
