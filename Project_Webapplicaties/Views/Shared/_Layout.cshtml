@@ -36,6 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
                     </li>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

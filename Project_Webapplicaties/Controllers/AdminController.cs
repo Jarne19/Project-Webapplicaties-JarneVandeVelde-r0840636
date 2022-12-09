@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project_Webapplicaties.Data.Repository.Interfaces;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
@@ -6,6 +7,7 @@ using Project_Webapplicaties.Models;
 
 namespace Project_Webapplicaties.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IUnitOfWork _uow;
