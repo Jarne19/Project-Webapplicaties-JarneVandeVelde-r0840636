@@ -7,6 +7,7 @@ namespace Project_Webapplicaties.Data.UnitOfWork.Interfaces
     public interface IUnitOfWork
     {
         IGenericRepository<Player> PlayerRepository { get; }
+        IGenericRepository<Team> TeamRepository { get; }
         Task Save();
     }
 }

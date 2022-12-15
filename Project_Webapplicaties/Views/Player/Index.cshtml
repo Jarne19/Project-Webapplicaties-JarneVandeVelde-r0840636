@@ -4,7 +4,23 @@
 }
 <div class="jumbotron-img2">
     <div class="container shadoww">
-        <h3 class="mb-5 display-4">Spelers</h3>
+        <div class="row">
+            <div class="col-5">
+                <h3 class="mb-5 display-4">Spelers</h3>
+            </div>
+            <div class="col-7 mt-4">
+                <form asp-controller="Player" asp-action="Search" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Zoek op spelernaam:
+                            <input asp-for="PlayerSearch">
+                            <input type="submit" value="Zoeken" class="btn btn-danger" />
+                            <a asp-controller="Player" asp-action="Index">Terug naar alle spelers</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row">
             @foreach (var item in Model.Players)
             {
@@ -12,9 +28,9 @@
                     <div class="card" style="width: 18rem;">
                         <img src="~/img/Player.jpg" class="card-img-top" alt="..." height="250">
                         <div class="card-body">
-                            <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.Age Jaar</h5>
-                            <p class="card-text">@item.PastDetails</p>
-                            <hr/>
+                            <h5 class="card-title"><b>@item.Firstname @item.Name</b><br /> @item.GetAge() Jaar</h5>
+                            <p class="card-text">@item.Position</p>
+                            <hr />
                             <a class="btn btn-danger" asp-controller="Player" asp-action="Details" asp-route-id="@item.PlayerId">Details</a>
                         </div>
                     </div>

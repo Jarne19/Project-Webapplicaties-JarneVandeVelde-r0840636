@@ -19,11 +19,17 @@ namespace Project_Webapplicaties.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Player>().ToTable("Player");
+            modelBuilder.Entity<Player>().ToTable("Player")
+                .HasOne(t=>t.Team)
+                .WithMany(p=>p.Players)
+                .HasForeignKey(t=>t.PloegId);
             modelBuilder.Entity<Game>().ToTable("Game");
             modelBuilder.Entity<Referee>().ToTable("Referee");
             modelBuilder.Entity<Sponsor>().ToTable("Sponsor");
-            modelBuilder.Entity<Team>().ToTable("Team");
+            modelBuilder.Entity<Team>().ToTable("Team")
+                .HasMany(x=>x.Players)
+                .WithOne(x=>x.Team)
+                .HasForeignKey(x=>x.PloegId);
             modelBuilder.Entity<TeamSponsor>().ToTable("TeamSponsor");
         }
     }

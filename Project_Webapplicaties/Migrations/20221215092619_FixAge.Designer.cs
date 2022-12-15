@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Webapplicaties.Data;
 
 namespace Project_Webapplicaties.Migrations
 {
     [DbContext(typeof(VwGerheideContext))]
-    partial class VwGerheideContextModelSnapshot : ModelSnapshot
+    [Migration("20221215092619_FixAge")]
+    partial class FixAge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,8 +259,8 @@ namespace Project_Webapplicaties.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BestLeg")
-                        .HasColumnType("int");
+                    b.Property<string>("BestLeg")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2");
@@ -269,15 +271,18 @@ namespace Project_Webapplicaties.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PastDetails")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("PloegId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Position")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("PlayerId");
 
-                    b.HasIndex("PloegId");
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Player");
                 });
@@ -328,8 +333,8 @@ namespace Project_Webapplicaties.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Division")
-                        .HasColumnType("int");
+                    b.Property<string>("Division")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -429,7 +434,7 @@ namespace Project_Webapplicaties.Migrations
                 {
                     b.HasOne("Project_Webapplicaties.Models.Team", "Team")
                         .WithMany("Players")
-                        .HasForeignKey("PloegId");
+                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("Project_Webapplicaties.Models.TeamSponsor", b =>

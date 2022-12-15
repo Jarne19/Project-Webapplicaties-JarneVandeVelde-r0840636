@@ -64,7 +64,9 @@ namespace Project_Webapplicaties
 
 
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IGenericRepository<Player>, GenericRepository<Player>>();
+            services.AddScoped<IGenericRepository<Team>, GenericRepository<Team>>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

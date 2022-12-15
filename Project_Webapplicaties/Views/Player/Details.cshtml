@@ -1,5 +1,6 @@
 ﻿@model Project_Webapplicaties.ViewModels.PlayerDetailsViewModel
 
+
 @{
     ViewData["Title"] = $"{Model.Firstname} {Model.Name}";
 }
@@ -11,8 +12,8 @@
             </div>
             <div class="col mt-5 mb-5">
                 <h2>@Model.Firstname @Model.Name</h2>
-                <h3>@Model.Age Jaar</h3>
-                <p>@Model.PastDetails</p>
+                <h3>@Model.GetAge() Jaar</h3>
+                <p>@Model.Position</p>
                 <div class="card mt-3">
                     <div class="card-header blue-text">
                         <b>Informatie</b>
@@ -25,11 +26,11 @@
                             </tr>
                             <tr>
                                 <td><b>Geboortedatum</b></td>
-                                <td>@Model.Birthdate</td>
+                                <td>@Html.DisplayFor(modelItem=>Model.Birthdate)</td>
                             </tr>
                             <tr>
-                                <td><b>Ploeg</b></td>
-                                <td>@Model.PloegId</td>
+                                <td><b>Ploeg</b></td> 
+                                <td>@Html.DisplayFor(modelItem=>Model.team.Name)</td>
                             </tr>
                         </tbody>
                     </table>

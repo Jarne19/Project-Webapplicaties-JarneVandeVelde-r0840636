@@ -1,7 +1,7 @@
-﻿@model List<Player>
+﻿@model List<Team>
 
 @{
-    ViewData["Title"] = "Speler aanpassen of verwijderen";
+    ViewData["Title"] = "Team aanpassen of verwijderen";
 }
 <div class="container-fluid">
     <div class="row">
@@ -15,9 +15,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
                             Team Toevoegen
-                        </a> 
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddPlayer" class="nav-link">
@@ -31,17 +31,17 @@
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeleteTeam" class="nav-link">
-                            Team Verwijderen/Updaten
+                            Team Verwijderen/Updaten <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeletePlayer" class="nav-link">
-                            Player Verwijderen/Updaten <span class="sr-only">(current)</span>
+                            Player Verwijderen/Updaten 
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">
-                            Sponsor Verwijderen/Updaten
+                            Sponsor Verwijderen/Updaten 
                         </a>
                     </li>
                 </ul>
@@ -49,15 +49,13 @@
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
             <div class="shadoww container m-5">
-                <h3 class="mb-5 display-4">Speler aanpassen of verwijderen</h3>
+                <h3 class="mb-5 display-4">Team aanpassen of verwijderen</h3>
                 <table class="table table-light mt-5 shadoww">
                     <thead>
                     <tr>
-                        <th scope="col"><b>Speler Id</b></th>
-                        <th scope="col"><b>Voornaam</b></th>
-                        <th scope="col"><b>Achternaam</b></th>
-                        <th scope="col"><b>Geboortedatum</b></th>
-                        <th scope="col"><b>Ploeg</b></th>
+                        <th scope="col"><b>Team Id</b></th>
+                        <th scope="col"><b>Team naam</b></th>
+                        <th scope="col"><b>Divisie</b></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -65,25 +63,19 @@
                     {
                         <tr>
                             <td>
-                                @item.PlayerId
-                            </td>
-                            <td>
-                                @item.Firstname
+                                @item.TeamId
                             </td>
                             <td>
                                 @item.Name
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.Birthdate)
+                                @item.Division
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.Team.Name)
+                                <a asp-controller="Admin" asp-action="EditTeam" asp-route-id="@item.TeamId">Aanpassen</a>
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.PlayerId">Aanpassen</a>
-                            </td>
-                            <td>
-                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.PlayerId">Verwijderen</a>
+                                <a asp-controller="Admin" asp-action="DeleteTeam" asp-route-id="@item.TeamId">Verwijderen</a>
                             </td>
                         </tr>
                     }

@@ -28,6 +28,20 @@ namespace Project_Webapplicaties.Data.UnitOfWork
                 return _playerRepository;
             }
         }
+        private IGenericRepository<Team> _teamRepository;
+
+        public IGenericRepository<Team> TeamRepository
+        {
+            get
+            {
+                if (_teamRepository == null)
+                {
+                    _teamRepository = new GenericRepository<Team>(_context);
+                }
+
+                return _teamRepository;
+            }
+        }
 
         public async Task Save()
         {

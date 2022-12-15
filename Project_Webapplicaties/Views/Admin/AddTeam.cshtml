@@ -1,5 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Admin";
+﻿@using Project_Webapplicaties.Models.Enums
+@model Project_Webapplicaties.ViewModels.AddTeamViewModel
+@{
+    ViewData["Title"] = "Speler toevoegen";
 }
 <div class="container-fluid">
     <div class="row">
@@ -7,13 +9,14 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a asp-controller="Admin" asp-action="Index" class="nav-link">
-                            Admin <span class="sr-only">(current)</span>
+                        <a class="nav-link active" asp-action="Index">
+                            <span data-feather="home"></span>
+                            Admin 
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
-                            Team Toevoegen
+                            Team Toevoegen <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -42,15 +45,34 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div>  
         </nav>
-
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
-            <div class="shadoww container m-5">
-                <img class="rounded mx-auto d-block mt-5" src="img/LogoVwGerheide.png" />
-                <h1 class="text-center">Welkom admin!</h1>
-                <h3 class="text-center  mb-5">Maak je keuze wat je wilt doen.</h3>
+            <div class=" pt-3 pb-2 m-5 shadoww">
+                <h3 class="mb-5 display-4">Team toevoegen</h3>
+                <form asp-action="AddTeam">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 ">
+                            <label asp-for="Name">Team naam</label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Division">Beste been</label>
+                            <select asp-for="Division" asp-items="Html.GetEnumSelectList<DivisionEnum>()" class="form-control">
+                                <option value="">-- Divisie selecteren --</option>
+                            </select>
+                            <span asp-validation-for="Division" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" value="AddTeam" class="btn btn-danger mt-3">Aanmaken</button>
+                </form>
             </div>
         </main>
     </div>
 </div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
