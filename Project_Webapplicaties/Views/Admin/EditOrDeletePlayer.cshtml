@@ -8,15 +8,16 @@
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Index">
                             <span data-feather="home"></span>
-                            Admin
+                            Admin 
                         </a>
                     </li>
+                    <h5 class="ml-2 mt-3"><b>Toevoegen</b></h5>
                     <li class="nav-item">
-                        <a class="nav-link">
-                            Team Toevoegen
+                        <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
+                            Team Toevoegen 
                         </a>
                     </li>
                     <li class="nav-item">
@@ -30,18 +31,39 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a asp-controller="Admin" asp-action="AddGame" class="nav-link">
+                            Wedstrijden Toevoegen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="AddReferee" class="nav-link">
+                            Scheidsrechter Toevoegen 
+                        </a>
+                    </li>
+                    <h5 class="ml-2 mt-3"><b>Verwijderen / Updaten</b></h5>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="EditOrDeleteTeam" class="nav-link">
                             Team Verwijderen/Updaten
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeletePlayer" class="nav-link">
-                            Player Verwijderen/Updaten <span class="sr-only">(current)</span>
+                            Player Verwijderen/Updaten
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">
                             Sponsor Verwijderen/Updaten
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="EditOrDeleteGame" class="nav-link">
+                            Wedstrijden Verwijderen/Updaten
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="EditOrDeleteReferee" class="nav-link">
+                            Scheidsrechter Verwijderen/Updaten
                         </a>
                     </li>
                 </ul>
@@ -57,6 +79,7 @@
                         <th scope="col"><b>Voornaam</b></th>
                         <th scope="col"><b>Achternaam</b></th>
                         <th scope="col"><b>Geboortedatum</b></th>
+                        <th scope="col"><b>Ploeg</b></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -74,6 +97,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem=>item.Birthdate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem=>item.Team.Name)
                             </td>
                             <td>
                                 <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.PlayerId">Aanpassen</a>

@@ -1,22 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Project_Webapplicaties.Models.Enums;
 
 namespace Project_Webapplicaties.ViewModels
 {
     public class AddPlayerViewModel
     {
-        [Required(ErrorMessage = "Firstname is required")]
+        [Required(ErrorMessage = "Voornaam is verplicht")]
         public string Firstname { get; set; }
-        [Required(ErrorMessage = "Name is required")]
+        [Required(ErrorMessage = "Achternaam is verplicht")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Birth date is required")]
+        [Required(ErrorMessage = "Geboortedatum is verplicht")]
         public DateTime Birthdate { get; set; }
-        [Required(ErrorMessage = "Age is required")]
-        public int Age { get; set; }
-        [Required(ErrorMessage = "Past details is required")]
-        public string PastDetails { get; set; }
-        [Required(ErrorMessage = "Best leg is required")]
-        public string BestLeg { get; set; }
+        [Required(ErrorMessage = "Positie is verplicht")]
+        public PositionEnum Position { get; set; }
+        [Required(ErrorMessage = "Beste been is verplicht")]
+        public BestLegEnum BestLeg { get; set; }
         public int? PloegId { get; set; }
+
     }
 }

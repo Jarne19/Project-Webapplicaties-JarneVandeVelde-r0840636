@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using Project_Webapplicaties.Models.Enums;
 
 namespace Project_Webapplicaties.Models
 {
@@ -10,11 +12,15 @@ namespace Project_Webapplicaties.Models
         public string Name { get; set; }
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
-        public int Age { get; set; }
-        public string PastDetails { get; set; }
-        public string BestLeg { get; set; }
+        public PositionEnum Position { get; set; }
+        public BestLegEnum BestLeg { get; set; }
         public int? PloegId { get; set; }
 
         public Team Team { get; set; }
+        
+        public int GetAge()
+        {
+            return DateTime.Now.Year - Birthdate.Year;
+        }
     }
 }

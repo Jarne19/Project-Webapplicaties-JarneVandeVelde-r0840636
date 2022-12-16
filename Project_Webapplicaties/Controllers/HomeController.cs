@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
 using Project_Webapplicaties.Models;
+using Project_Webapplicaties.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,15 +15,19 @@ namespace Project_Webapplicaties.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _uow;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork uow)
         {
             _logger = logger;
+            _uow = uow;
         }
 
         public IActionResult Index()
         {
-            return View();
+            GameListViewModel vm = new GameListViewModel();
+            vm.Games = _uow.GameRepository.GetAll().Include(x=>x.Team).Include(x=>x.Referee).ToList();
+            return View(vm);
         }
 
         public IActionResult Privacy()

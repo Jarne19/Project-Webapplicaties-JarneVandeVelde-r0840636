@@ -238,14 +238,11 @@ namespace Project_Webapplicaties.Migrations
                     b.Property<int>("RefereeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("int");
-
                     b.HasKey("GameId");
 
-                    b.HasIndex("RefereeId");
+                    b.HasIndex("HomeTeam");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("RefereeId");
 
                     b.ToTable("Game");
                 });
@@ -257,11 +254,8 @@ namespace Project_Webapplicaties.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Age")
+                    b.Property<int>("BestLeg")
                         .HasColumnType("int");
-
-                    b.Property<string>("BestLeg")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2");
@@ -272,18 +266,15 @@ namespace Project_Webapplicaties.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PastDetails")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("PloegId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("Position")
                         .HasColumnType("int");
 
                     b.HasKey("PlayerId");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("PloegId");
 
                     b.ToTable("Player");
                 });
@@ -334,8 +325,8 @@ namespace Project_Webapplicaties.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Division")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Division")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -420,22 +411,24 @@ namespace Project_Webapplicaties.Migrations
 
             modelBuilder.Entity("Project_Webapplicaties.Models.Game", b =>
                 {
+                    b.HasOne("Project_Webapplicaties.Models.Team", "Team")
+                        .WithMany("Games")
+                        .HasForeignKey("HomeTeam")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Project_Webapplicaties.Models.Referee", "Referee")
                         .WithMany("Games")
                         .HasForeignKey("RefereeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Project_Webapplicaties.Models.Team", "Team")
-                        .WithMany("Games")
-                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("Project_Webapplicaties.Models.Player", b =>
                 {
                     b.HasOne("Project_Webapplicaties.Models.Team", "Team")
                         .WithMany("Players")
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("PloegId");
                 });
 
             modelBuilder.Entity("Project_Webapplicaties.Models.TeamSponsor", b =>

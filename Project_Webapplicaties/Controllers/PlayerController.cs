@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
 using Project_Webapplicaties.Models;
@@ -19,13 +20,14 @@ namespace Project_Webapplicaties.Controllers
         public IActionResult Index()
         {
             PlayerListViewModel viewModel = new PlayerListViewModel();
-            viewModel.Players = _uow.PlayerRepository.GetAll().ToList();
+            viewModel.Players = _uow.PlayerRepository.GetAll().Include(x=>x.Team).ToList();
             return View(viewModel);
         }
 
         public IActionResult Details(int id)
         {
-            Player player = _uow.PlayerRepository.GetAll().Where(x=>x.PlayerId == id).FirstOrDefault();
+            //var selectedTeam = model.PloegId;
+            Player player = _uow.PlayerRepository.GetAll().Where(x=>x.PlayerId == id).Include(x=>x.Team).FirstOrDefault();
             if (player != null)
             {
                 PlayerDetailsViewModel vm = new PlayerDetailsViewModel()
@@ -34,8 +36,8 @@ namespace Project_Webapplicaties.Controllers
                     Firstname = player.Firstname,
                     Birthdate = player.Birthdate,
                     BestLeg = player.BestLeg,
-                    PastDetails = player.PastDetails,
-                    Age = player.Age
+                    Position = player.Position,
+                    team = player.Team
                 };
                 return View(vm);
             }
@@ -45,6 +47,20 @@ namespace Project_Webapplicaties.Controllers
                 viewModel.Players = _uow.PlayerRepository.GetAll().ToList();
                 return View("",viewModel);
             }
+        }
+
+        public IActionResult Search(PlayerListViewModel vm)
+        {
+            if (!string.IsNullOrEmpty(vm.PlayerSearch))
+            {
+                vm.Players = _uow.PlayerRepository.GetAll().Where(p => p.Firstname.Contains(vm.PlayerSearch)).ToList();
+            }
+            else
+            {
+                vm.Players = _uow.PlayerRepository.GetAll().ToList();
+            }
+
+            return View("Index", vm);
         }
     }
 }
