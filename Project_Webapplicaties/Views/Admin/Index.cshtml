@@ -7,13 +7,15 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a asp-controller="Admin" asp-action="Index" class="nav-link">
-                            Admin <span class="sr-only">(current)</span>
+                        <a class="nav-link active" asp-action="Index">
+                            <span data-feather="home"></span>
+                            Admin 
                         </a>
                     </li>
+                    <h5 class="ml-2 mt-3"><b>Toevoegen</b></h5>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
-                            Team Toevoegen
+                            Team Toevoegen 
                         </a>
                     </li>
                     <li class="nav-item">
@@ -27,6 +29,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="AddGame" class="nav-link">
+                            Wedstrijden Toevoegen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="AddReferee" class="nav-link">
+                            Scheidsrechter Toevoegen 
+                        </a>
+                    </li>
+                    <h5 class="ml-2 mt-3"><b>Verwijderen / Updaten</b></h5>
+                    <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeleteTeam" class="nav-link">
                             Team Verwijderen/Updaten
                         </a>
@@ -39,6 +52,16 @@
                     <li class="nav-item">
                         <a class="nav-link">
                             Sponsor Verwijderen/Updaten
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="EditOrDeleteGame" class="nav-link">
+                            Wedstrijden Verwijderen/Updaten
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="EditOrDeleteReferee" class="nav-link">
+                            Scheidsrechter Verwijderen/Updaten
                         </a>
                     </li>
                 </ul>

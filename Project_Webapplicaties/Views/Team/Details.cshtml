@@ -1,31 +1,26 @@
-﻿@model Project_Webapplicaties.ViewModels.PlayerListViewModel
+﻿@model Project_Webapplicaties.ViewModels.TeamDetailsViewModel
 @{
-    ViewData["Title"] = "Spelers";
+    ViewData["Title"] = $"{Model.Name}";
 }
 <div class="jumbotron-img2">
     <div class="container shadoww">
         <div class="row">
-            <div class="col-5">
-                <h3 class="mb-5 display-4">Spelers</h3>
+            <div class="col-6">
+                <h3 class="mb-3 display-4">@Model.Name</h3>
+                <h5>@Model.Division</h5>
+                <a class="btn btn-danger mt-4" asp-controller="Team" asp-action="Index">Terug naar teams</a>
             </div>
-            <div class="col-7 mt-4">
-                <form asp-controller="Player" asp-action="Search" method="get">
-                    <div class="form-actions no-color">
-                        <p>
-                            Zoek op spelernaam:
-                            <input asp-for="PlayerSearch">
-                            <input type="submit" value="Zoeken" class="btn btn-danger" />
-                            <a asp-controller="Player" asp-action="Index">Terug naar alle spelers</a>
-                        </p>
-                    </div>
-                </form>
+            <div class="col-5 shadoww mr-2">
+                <img src="~/img/PloegFoto2.jpg" class="card-img-top" alt="..." height="300">
             </div>
         </div>
+
+        <h4 class="mt-6">Spelers van @Model.Name</h4>
         <div class="row">
             @foreach (var item in Model.Players)
             {
                 <div class="col-sm m-2 mb-5">
-                    <div class="card shadow" style="width: 18rem;">
+                    <div class="card" style="width: 18rem;">
                         <img src="~/img/Player.jpg" class="card-img-top" alt="..." height="250">
                         <div class="card-body">
                             <h5 class="card-title"><b>@item.Firstname @item.Name</b><br /> @item.GetAge() Jaar</h5>
@@ -39,3 +34,4 @@
         </div>
     </div>
 </div>
+

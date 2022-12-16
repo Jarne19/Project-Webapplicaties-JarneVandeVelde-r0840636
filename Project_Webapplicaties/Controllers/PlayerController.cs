@@ -24,10 +24,10 @@ namespace Project_Webapplicaties.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Details(int id, PlayerDetailsViewModel model)
+        public IActionResult Details(int id)
         {
-            var selectedTeam = model.PloegId;
-            Player player = _uow.PlayerRepository.GetAll().Where(x=>x.PlayerId == id).FirstOrDefault();
+            //var selectedTeam = model.PloegId;
+            Player player = _uow.PlayerRepository.GetAll().Where(x=>x.PlayerId == id).Include(x=>x.Team).FirstOrDefault();
             if (player != null)
             {
                 PlayerDetailsViewModel vm = new PlayerDetailsViewModel()
@@ -36,7 +36,8 @@ namespace Project_Webapplicaties.Controllers
                     Firstname = player.Firstname,
                     Birthdate = player.Birthdate,
                     BestLeg = player.BestLeg,
-                    Position = player.Position
+                    Position = player.Position,
+                    team = player.Team
                 };
                 return View(vm);
             }

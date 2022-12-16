@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Webapplicaties.Data;
 
 namespace Project_Webapplicaties.Migrations
 {
     [DbContext(typeof(VwGerheideContext))]
-    partial class VwGerheideContextModelSnapshot : ModelSnapshot
+    [Migration("20221215215800_UpdateGame")]
+    partial class UpdateGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,11 +240,14 @@ namespace Project_Webapplicaties.Migrations
                     b.Property<int>("RefereeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
                     b.HasKey("GameId");
 
-                    b.HasIndex("HomeTeam");
-
                     b.HasIndex("RefereeId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Game");
                 });
@@ -411,17 +416,15 @@ namespace Project_Webapplicaties.Migrations
 
             modelBuilder.Entity("Project_Webapplicaties.Models.Game", b =>
                 {
-                    b.HasOne("Project_Webapplicaties.Models.Team", "Team")
-                        .WithMany("Games")
-                        .HasForeignKey("HomeTeam")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Project_Webapplicaties.Models.Referee", "Referee")
                         .WithMany("Games")
                         .HasForeignKey("RefereeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Project_Webapplicaties.Models.Team", "Team")
+                        .WithMany("Games")
+                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("Project_Webapplicaties.Models.Player", b =>

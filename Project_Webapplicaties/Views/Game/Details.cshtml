@@ -1,0 +1,48 @@
+﻿@model Project_Webapplicaties.ViewModels.GameDetailViewModel
+@{
+    ViewData["Title"] = $"{@Model.Team.Name} vs {@Model.AwayTeam}";
+}
+<div class="jumbotron-img2">
+    <div class="container shadoww">
+        <div class="row">
+            <div class="col-10">
+                <h3 class="mb-3 display-4">@Model.Team.Name vs @Model.AwayTeam</h3>
+            </div>
+            <div class="col-2">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-danger mt-4">Terug naar home</a>
+            </div>
+        </div>
+        <div class="mt-4 card shadow">
+            <div class="row m-5">
+                <div class="col p-5 footer-color">
+                    <div class="card text-center  ">
+                        <div class="card-header color nav-text">
+                            @Model.PlayDate
+                        </div>
+                        <table class="table mt-3 table-bordered ">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        -
+                                        <br />
+                                        <b>@Html.DisplayFor(modelItem => Model.Team.Name)</b>
+                                    </td>
+                                    <td style="width: 260px">
+                                        -
+                                        <br />
+                                        <b>@Model.AwayTeam</b>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col footer-color p-5">
+                    <p class="nav-text"> <img src="img/schedule.png"/> @Model.PlayDate.Date</p>
+                    <p class="nav-text"> <img src="img/clock.png"/> @Model.PlayDate.TimeOfDay</p>
+                    <p class="nav-text"> <img src="img/placeholder.png"/> Gerheide (Kapel)<br/>2490 Balen</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

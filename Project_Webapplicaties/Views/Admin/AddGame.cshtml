@@ -1,7 +1,7 @@
-﻿@model List<Player>
-
+﻿@using Project_Webapplicaties.Models.Enums
+@model Project_Webapplicaties.ViewModels.AddGameViewModel
 @{
-    ViewData["Title"] = "Speler aanpassen of verwijderen";
+    ViewData["Title"] = "Wedstrijd toevoegen";
 }
 <div class="container-fluid">
     <div class="row">
@@ -67,51 +67,46 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div>  
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
-            <div class="shadoww container m-5">
-                <h3 class="mb-5 display-4">Speler aanpassen of verwijderen</h3>
-                <table class="table table-light mt-5 shadoww">
-                    <thead>
-                    <tr>
-                        <th scope="col"><b>Speler Id</b></th>
-                        <th scope="col"><b>Voornaam</b></th>
-                        <th scope="col"><b>Achternaam</b></th>
-                        <th scope="col"><b>Geboortedatum</b></th>
-                        <th scope="col"><b>Ploeg</b></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @item.PlayerId
-                            </td>
-                            <td>
-                                @item.Firstname
-                            </td>
-                            <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem=>item.Birthdate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem=>item.Team.Name)
-                            </td>
-                            <td>
-                                <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.PlayerId">Aanpassen</a>
-                            </td>
-                            <td>
-                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.PlayerId">Verwijderen</a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+            <div class=" pt-3 pb-2 m-5 shadoww">
+                <h3 class="mb-5 display-4">Wedstrijd toevoegen</h3>
+                <form asp-action="AddGame">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="HomeTeam">Thuis team</label>
+                            <select asp-for="HomeTeam" asp-items="ViewBag.Teams" class="form-control">
+                            </select>
+                            <span asp-validation-for="HomeTeam" class="text-danger"></span>
+                        </div>
+                         <div class="form-group col-md-6">
+                            <label asp-for="AwayTeam">Uit team</label>
+                            <select asp-for="AwayTeam" asp-items="Html.GetEnumSelectList<TeamsEnum>()" class="form-control">
+                                <option value="">-- Uit team selecteren --</option>
+                            </select>
+                            <span asp-validation-for="AwayTeam" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label asp-for="PlayDate">Datum van wedstrijd</label>
+                            <input asp-for="PlayDate" class="form-control">
+                            <span asp-validation-for="PlayDate" class="text-danger"></span>
+                        </div>     
+                        <div class="form-group col-md-6">
+                            <label asp-for="RefereeId">Scheidsrechter</label>
+                            <select asp-for="RefereeId" asp-items="ViewBag.Referees" class="form-control">
+                            </select>
+                            <span asp-validation-for="RefereeId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" value="AddTeam" class="btn btn-danger mt-3">Aanmaken</button>
+                </form>
             </div>
         </main>
     </div>
 </div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

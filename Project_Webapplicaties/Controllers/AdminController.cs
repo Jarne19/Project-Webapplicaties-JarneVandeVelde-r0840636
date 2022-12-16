@@ -22,13 +22,13 @@ namespace Project_Webapplicaties.Controllers
     {
         private readonly IUnitOfWork _uow;
         private readonly ITeamRepository _teamRepository;
-
-        public AdminController(IUnitOfWork uow,ITeamRepository teamRepository)
+        private readonly IRefereeRepository _refereeRepository;
+        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository)
         {
             _uow = uow;
             _teamRepository = teamRepository;
+            _refereeRepository = refereeRepository;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -43,7 +43,7 @@ namespace Project_Webapplicaties.Controllers
         }
         public async Task<ActionResult<IEnumerable<Player>>> EditOrDeletePlayer()
         {
-            var player = await _uow.PlayerRepository.GetAll().Include(x=>x.Team).ToListAsync();
+            var player = await _uow.PlayerRepository.GetAll().Include(x => x.Team).ToListAsync();
             return View(player);
         }
 
@@ -57,7 +57,7 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Player>> EditPlayer(int id,AddPlayerViewModel model)
+        public async Task<ActionResult<Player>> EditPlayer(int id)
         {
             ViewBag.Teams = GetTeams();
             var player = await _uow.PlayerRepository.GetById(id);
@@ -135,6 +135,107 @@ namespace Project_Webapplicaties.Controllers
 
         #endregion
 
+        #region Create,Delete,Update Game
+
+        public IActionResult AddGame()
+        {
+            ViewBag.Teams = GetTeams();
+            ViewBag.Referees = GetReferees();
+            return View();
+        }
+        public async Task<ActionResult<IEnumerable<Game>>> EditOrDeleteGame()
+        {
+            var game = await _uow.GameRepository.GetAll().Include(x=>x.Team).Include(x=>x.Referee).ToListAsync();
+            return View(game);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Game>> AddGame(Game game)
+        {
+            _uow.GameRepository.Create(game);
+            await _uow.Save();
+            return RedirectToAction("AddGame");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Game>> EditGame(int id)
+        {
+            ViewBag.Teams = GetTeams();
+            ViewBag.Referees = GetReferees();
+            var game = await _uow.GameRepository.GetById(id);
+            if (game == null) return NotFound();
+            return View(game);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditGame(int id, Game game)
+        {
+            if (id != game.GameId) return BadRequest();
+            _uow.GameRepository.Update(game);
+            await _uow.Save();
+            return RedirectToAction("EditOrDeleteGame");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Game>> DeleteGame(int id)
+        {
+            Game game = await _uow.GameRepository.GetById(id);
+            if (game == null) return NotFound();
+            _uow.GameRepository.Delete(game);
+            await _uow.Save();
+            return RedirectToAction("EditOrDeleteGame");
+        }
+
+        #endregion
+
+        #region Create,Delete,Update Referee
+
+        public IActionResult AddReferee()
+        {
+            return View();
+        }
+        public async Task<ActionResult<IEnumerable<Referee>>> EditOrDeleteReferee()
+        {
+            var referee = await _uow.RefereeRepository.GetAll().ToListAsync();
+            return View(referee);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Referee>> AddReferee(Referee referee)
+        {
+            _uow.RefereeRepository.Create(referee);
+            await _uow.Save();
+            return RedirectToAction("AddReferee");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Referee>> EditReferee(int id)
+        {
+            var referee = await _uow.RefereeRepository.GetById(id);
+            if (referee == null) return NotFound();
+            return View(referee);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditReferee(int id, Referee referee)
+        {
+            if (id != referee.RefereeId) return BadRequest();
+            _uow.RefereeRepository.Update(referee);
+            await _uow.Save();
+            return RedirectToAction("EditOrDeleteReferee");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Referee>> DeleteReferee(int id)
+        {
+            Referee referee = await _uow.RefereeRepository.GetById(id);
+            if (referee == null) return NotFound();
+            _uow.RefereeRepository.Delete(referee);
+            await _uow.Save();
+            return RedirectToAction("EditOrDeleteReferee");
+        }
+
+        #endregion
 
         private List<SelectListItem> GetTeams()
         {
@@ -150,8 +251,25 @@ namespace Project_Webapplicaties.Controllers
                 Value = "",
                 Text = "-- Selecteer een team --"
             };
-            teams.Insert(0,defItem);
+            teams.Insert(0, defItem);
             return teams;
+        }
+        private List<SelectListItem> GetReferees()
+        {
+            var referees = new List<SelectListItem>();
+            PaginatedList<Referee> referee = _refereeRepository.GetReferee("Name", SortOrder.Ascending);
+            referees = referee.Items.Select(x => new SelectListItem()
+            {
+                Value = x.RefereeId.ToString(),
+                Text = $"{x.Firstname} {x.Name}"
+            }).ToList();
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "-- Selecteer een scheidsrechter --"
+            };
+            referees.Insert(0, defItem);
+            return referees;
         }
     }
 }

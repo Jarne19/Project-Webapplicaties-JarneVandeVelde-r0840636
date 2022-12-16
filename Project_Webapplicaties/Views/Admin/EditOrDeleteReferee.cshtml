@@ -1,7 +1,7 @@
-﻿@model List<Player>
+﻿@model List<Referee>
 
 @{
-    ViewData["Title"] = "Speler aanpassen of verwijderen";
+    ViewData["Title"] = "Scheidsrechter aanpassen of verwijderen";
 }
 <div class="container-fluid">
     <div class="row">
@@ -71,15 +71,14 @@
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
             <div class="shadoww container m-5">
-                <h3 class="mb-5 display-4">Speler aanpassen of verwijderen</h3>
+                <h3 class="mb-5 display-4">Scheidsrechter aanpassen of verwijderen</h3>
                 <table class="table table-light mt-5 shadoww">
                     <thead>
                     <tr>
-                        <th scope="col"><b>Speler Id</b></th>
+                        <th scope="col"><b>Scheidsrechter Id</b></th>
                         <th scope="col"><b>Voornaam</b></th>
                         <th scope="col"><b>Achternaam</b></th>
                         <th scope="col"><b>Geboortedatum</b></th>
-                        <th scope="col"><b>Ploeg</b></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -87,7 +86,7 @@
                     {
                         <tr>
                             <td>
-                                @item.PlayerId
+                                @item.RefereeId
                             </td>
                             <td>
                                 @item.Firstname
@@ -96,16 +95,13 @@
                                 @item.Name
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.Birthdate)
+                                @Html.DisplayFor(modelItem=>item.Birtdate)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.Team.Name)
+                                <a asp-controller="Admin" asp-action="EditReferee" asp-route-id="@item.RefereeId">Aanpassen</a>
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.PlayerId">Aanpassen</a>
-                            </td>
-                            <td>
-                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.PlayerId">Verwijderen</a>
+                                <a asp-controller="Admin" asp-action="DeleteReferee" asp-route-id="@item.RefereeId">Verwijderen</a>
                             </td>
                         </tr>
                     }

@@ -1,10 +1,11 @@
-﻿using Project_Webapplicaties.Models.Enums;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Project_Webapplicaties.Models;
+using Project_Webapplicaties.Models.Enums;
 
-namespace Project_Webapplicaties.Models
+namespace Project_Webapplicaties.ViewModels
 {
-    public class Game
+    public class GameDetailViewModel
     {
         public int GameId { get; set; }
         [DataType(DataType.Date)]
@@ -12,8 +13,6 @@ namespace Project_Webapplicaties.Models
         public int HomeTeam { get; set; }
         public TeamsEnum AwayTeam { get; set; }
         public int RefereeId { get; set; }
-
-
         public Referee Referee { get; set; }
         public Team Team { get; set; }
     }
