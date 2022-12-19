@@ -70,6 +70,8 @@ namespace Project_Webapplicaties
             services.AddScoped<IGenericRepository<Team>, GenericRepository<Team>>();
             services.AddScoped<IGenericRepository<Game>, GenericRepository<Game>>();
             services.AddScoped<IGenericRepository<Referee>, GenericRepository<Referee>>();
+            services.AddScoped<IGenericRepository<Sponsor>, GenericRepository<Sponsor>>();
+            services.AddScoped<IGenericRepository<TeamSponsor>, GenericRepository<TeamSponsor>>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

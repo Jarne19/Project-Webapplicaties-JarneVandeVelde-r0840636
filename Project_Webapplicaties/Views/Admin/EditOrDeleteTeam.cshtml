@@ -14,7 +14,9 @@
                             Admin 
                         </a>
                     </li>
-                    <h5 class="ml-2 mt-3"><b>Toevoegen</b></h5>
+                    <li>
+                        <h5 class="ml-2 mt-3"><b>Toevoegen</b></h5>
+                    </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
                             Team Toevoegen 
@@ -26,7 +28,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a asp-controller="Admin" asp-action="AddSponsor" class="nav-link">
                             Sponsor Toevoegen
                         </a>
                     </li>
@@ -40,7 +42,10 @@
                             Scheidsrechter Toevoegen 
                         </a>
                     </li>
-                    <h5 class="ml-2 mt-3"><b>Verwijderen / Updaten</b></h5>
+                    <li>
+                        <h5 class="ml-2 mt-3"><b>Verwijderen / Updaten</b></h5>
+                    </li>
+                    
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeleteTeam" class="nav-link">
                             Team Verwijderen/Updaten
@@ -52,7 +57,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a asp-controller="Admin" asp-action="EditOrDeleteSponsor" class="nav-link">
                             Sponsor Verwijderen/Updaten
                         </a>
                     </li>

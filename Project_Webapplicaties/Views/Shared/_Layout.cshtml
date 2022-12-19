@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/css/VwGerheide.css" />
     <link rel="icon" type="image/png" sizes="32x32"
           href="~/img/LogoVwGerheide.png">
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark color">
@@ -19,7 +21,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <partial name="_LoginPartial"/>
+                <partial name="_LoginPartial" />
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link nav-text ml-2 " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -46,18 +48,39 @@
             </div>
         </div>
     </nav>
-<main role="main" >
-            @RenderBody()
-        </main>
-<footer class="pt-4  footer-color">
+    <main role="main">
+        <div id="myModalSuccess" class="modal fade text-width:30%;" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Informatie</h2>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div id="MyModalSuccessAlertBody" class="modal-body alert alert-success">
+                        Gelukt!
+                    </div>
+                    <div class="modal-footer">
+                        &nbsp;
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Sluiten</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+
+        @RenderBody()
+    </main>
+    <footer class="pt-4  footer-color">
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
                     <h6 class="red-text"> Vw Gerheide</h6>
-                    <p class="nav-text">Gerheide (Kapel)<br/>2490 Balen</p>
+                    <p class="nav-text">Gerheide (Kapel)<br />2490 Balen</p>
                 </div>
                 <div class="col-md-5">
-                    <img class="" src="/img/LogoVwGerheide.png" height="85"/>
+                    <img class="" src="/img/LogoVwGerheide.png" height="85" />
                 </div>
                 <div class="col-md-2 align-items-lg-end">
                     <ul class="list-unstyled">

@@ -52,7 +52,7 @@ namespace Project_Webapplicaties.Controllers
         {
             _uow.PlayerRepository.Create(player);
             await _uow.Save();
-            TempData["SuccessMessage"] = "Speler is toegevoegd";
+            TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is toegevoegd";
             return RedirectToAction("AddPlayer");
         }
 
@@ -233,6 +233,73 @@ namespace Project_Webapplicaties.Controllers
             _uow.RefereeRepository.Delete(referee);
             await _uow.Save();
             return RedirectToAction("EditOrDeleteReferee");
+        }
+
+        #endregion
+
+        #region Create,Delete,Update Sponsor
+
+        public IActionResult AddSponsor()
+        {
+            ViewBag.Teams = GetTeams();
+            return View();
+        }
+        public async Task<ActionResult<IEnumerable<Sponsor>>> EditOrDeleteSponsor()
+        {
+            //var sponsor = await _uow.SponsorRepository.GetAll().Include(x=>x.TeamSponsors).ThenInclude(x=>x.Team).ToListAsync();
+            var teamSponsor = await _uow.TeamSponsorRepository.GetAll().Include(x => x.Sponsor).Include(x => x.Team)
+                .ToListAsync();
+            return View(teamSponsor);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Sponsor>> AddSponsor(Sponsor sponsor)
+        {
+            //var sponser = new Sponsor();
+            //sponser.Name = teamsSponsor.Sponsor.Name;
+            //sponser.CompanyName = teamsSponsor.Sponsor.CompanyName;
+            //_uow.SponsorRepository.Create(sponser);
+            //foreach (var TeamId in teamsSponsor.Sponsor.TeamSponsors)
+            //{
+            //    var teamSponsor = new TeamSponsor();
+            //    teamSponsor.Sponsor = sponser;
+            //    teamSponsor.TeamId = TeamId.TeamId;
+            //    _uow.TeamSponsorRepository.Create(teamSponsor);
+            //}
+
+            //await _uow.Save();
+
+            _uow.SponsorRepository.Create(sponsor);
+            await _uow.Save();
+            return RedirectToAction("AddSponsor");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Sponsor>> EditSponsor(int id)
+        {
+            ViewBag.Teams = GetTeams();
+            var sponsor = await _uow.SponsorRepository.GetById(id);
+            if (sponsor == null) return NotFound();
+            return View(sponsor);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditSponsor(int id, Sponsor sponsor)
+        {
+            if (id != sponsor.SponsorId) return BadRequest();
+            _uow.SponsorRepository.Update(sponsor);
+            await _uow.Save();
+            return RedirectToAction("EditOrDeleteSponsor");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Sponsor>> DeleteSponsor(int id)
+        {
+            Sponsor sponsor = await _uow.SponsorRepository.GetById(id);
+            if (sponsor == null) return NotFound();
+            _uow.SponsorRepository.Delete(sponsor);
+            await _uow.Save();
+            return RedirectToAction("EditOrDeleteSponsor");
         }
 
         #endregion

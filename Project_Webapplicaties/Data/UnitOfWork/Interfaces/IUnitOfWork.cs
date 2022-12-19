@@ -10,6 +10,8 @@ namespace Project_Webapplicaties.Data.UnitOfWork.Interfaces
         IGenericRepository<Team> TeamRepository { get; }
         IGenericRepository<Game> GameRepository { get; }
         IGenericRepository<Referee> RefereeRepository { get; }
+        IGenericRepository<Sponsor> SponsorRepository { get; }
+        IGenericRepository<TeamSponsor> TeamSponsorRepository { get; }
         Task Save();
     }
 }

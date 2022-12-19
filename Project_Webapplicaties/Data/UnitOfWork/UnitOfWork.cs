@@ -66,6 +66,30 @@ namespace Project_Webapplicaties.Data.UnitOfWork
                 return _refereeRepository;
             }
         }
+        private IGenericRepository<Sponsor> _sponsorRepository;
+        public IGenericRepository<Sponsor> SponsorRepository
+        {
+            get
+            {
+                if (_sponsorRepository == null)
+                {
+                    _sponsorRepository = new GenericRepository<Sponsor>(_context);
+                }
+                return _sponsorRepository;
+            }
+        }
+        private IGenericRepository<TeamSponsor> _teamSponsorRepository;
+        public IGenericRepository<TeamSponsor> TeamSponsorRepository
+        {
+            get
+            {
+                if (_teamSponsorRepository == null)
+                {
+                    _teamSponsorRepository = new GenericRepository<TeamSponsor>(_context);
+                }
+                return _teamSponsorRepository;
+            }
+        }
         public async Task Save()
         {
             await _context.SaveChangesAsync();
