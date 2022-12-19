@@ -20,6 +20,10 @@
     margin-right: auto;
     width: 50%;
 }
+body {
+    font-family: 'Spline Sans', sans-serif;
+}
+
 
 .jumbotron-img2 {
     background: url("../img/bg.jpg") no-repeat center center;

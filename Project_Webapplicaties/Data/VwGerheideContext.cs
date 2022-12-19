@@ -36,7 +36,14 @@ namespace Project_Webapplicaties.Data
                 .HasMany(x=>x.Players)
                 .WithOne(x=>x.Team)
                 .HasForeignKey(x=>x.PloegId);
-            modelBuilder.Entity<TeamSponsor>().ToTable("TeamSponsor");
+            modelBuilder.Entity<TeamSponsor>().ToTable("TeamSponsor")
+                .HasOne(x=>x.Sponsor)
+                .WithMany(x=>x.TeamSponsors)
+                .HasForeignKey(x=>x.SponsorId);
+            modelBuilder.Entity<TeamSponsor>().ToTable("TeamSponsor")
+                .HasOne(x => x.Team)
+                .WithMany(x => x.TeamSponsors)
+                .HasForeignKey(x => x.TeamId);
         }
     }
 }
