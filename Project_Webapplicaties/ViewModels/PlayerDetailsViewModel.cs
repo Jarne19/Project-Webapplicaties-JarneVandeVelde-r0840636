@@ -18,6 +18,7 @@ namespace Project_Webapplicaties.ViewModels
         public BestLegEnum BestLeg { get; set; }
         public int? PloegId { get; set; }
         public Team team { get; set; }
+        public string GetFullName => $"{Firstname} {Name}";
 
         public int GetAge()
         {

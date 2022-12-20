@@ -99,7 +99,7 @@
                             <br/>
                             <label asp-for="PloegId">Ploeg</label>
                             <select asp-for="PloegId" asp-items="ViewBag.Teams" class="form-control">
-                                <option value="">-- Positie selecteren --</option>
+                                
                             </select>
                             <span asp-validation-for="Position" class="text-danger"></span>
                         </div>
@@ -118,7 +118,7 @@
                             <span asp-validation-for="BestLeg" class="text-danger"></span>
                         </div>
                     </div>
-                    <input type="submit" value="EditPlayer" title="Aanpassen" name="Aanpassen" class="btn btn-danger" />
+                    <input type="submit" value="Aanpassen" title="Aanpassen" name="Aanpassen" class="btn btn-danger" />
                 }
             </div>
         </main>

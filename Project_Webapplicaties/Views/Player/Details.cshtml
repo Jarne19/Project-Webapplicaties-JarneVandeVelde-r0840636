@@ -2,16 +2,16 @@
 
 
 @{
-    ViewData["Title"] = $"{Model.Firstname} {Model.Name}";
+    ViewData["Title"] = $"{Model.GetFullName}";
 }
 <div class="jumbotron-img2">
     <div class="container shadoww">
         <div class="row">
             <div class="col">
-                <img src="~/img/Player.jpg" class="card-img-top mt-5 mb-5 card-img shadow center-img" style="height: 350px; width: 350px" alt="@Model.Firstname @Model.Name">
+                <img src="~/Images/Player.jpg" class="card-img-top mt-5 mb-5 card-img shadow center-img" style="height: 350px; width: 350px" alt="@Model.Firstname @Model.Name">
             </div>
             <div class="col mt-5 mb-5">
-                <h2 class="display-4">@Model.Firstname @Model.Name</h2>
+                <h2 class="display-4">@Model.GetFullName</h2>
                 <h3>@Model.GetAge() Jaar</h3>
                 <h5>@Model.Position</h5>
                 <div class="card mt-3 shadow">

@@ -11,6 +11,11 @@
     background: #474747;
     border-top-color: #ff2e2e;
 }
+
+.material-symbols-outlined {
+     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
+ }
+
 .red-text {
     color: #ff2e2e;
 }

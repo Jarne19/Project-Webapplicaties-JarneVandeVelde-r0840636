@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Definux.Utilities.Objects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.Repository.Interfaces;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
@@ -23,11 +28,13 @@ namespace Project_Webapplicaties.Controllers
         private readonly IUnitOfWork _uow;
         private readonly ITeamRepository _teamRepository;
         private readonly IRefereeRepository _refereeRepository;
-        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository,IWebHostEnvironment webHostEnvironment)
         {
             _uow = uow;
             _teamRepository = teamRepository;
             _refereeRepository = refereeRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -41,12 +48,6 @@ namespace Project_Webapplicaties.Controllers
             ViewBag.Teams = GetTeams();
             return View();
         }
-        public async Task<ActionResult<IEnumerable<Player>>> EditOrDeletePlayer()
-        {
-            var player = await _uow.PlayerRepository.GetAll().Include(x => x.Team).ToListAsync();
-            return View(player);
-        }
-
         [HttpPost]
         public async Task<ActionResult<Player>> AddPlayer(Player player)
         {
@@ -55,7 +56,11 @@ namespace Project_Webapplicaties.Controllers
             TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is toegevoegd";
             return RedirectToAction("AddPlayer");
         }
-
+        public async Task<ActionResult<IEnumerable<Player>>> EditOrDeletePlayer()
+        {
+            var player = await _uow.PlayerRepository.GetAll().Include(x => x.Team).ToListAsync();
+            return View(player);
+        }
         [HttpGet]
         public async Task<ActionResult<Player>> EditPlayer(int id)
         {
@@ -244,34 +249,43 @@ namespace Project_Webapplicaties.Controllers
             ViewBag.Teams = GetTeams();
             return View();
         }
+
+        //[HttpPost]
+        //public async Task<ActionResult<Sponsor>> AddSponsor(AddSponsorViewModel vm)
+        //{
+        //    string stringFileName = UploadFile(vm);
+        //    var sponsor = new Sponsor
+        //    {
+        //        Name = vm.Name,
+        //        CompanyName = vm.CompanyName,
+        //        SponsorImage = stringFileName
+        //    };
+        //    _uow.SponsorRepository.Create(sponsor);
+        //    await _uow.Save();
+        //    return RedirectToAction("AddSponsor");
+        //}
+
+        //private string UploadFile(AddSponsorViewModel vm)
+        //{
+        //    string fileName = "";
+        //    if (vm.SponsorImage != null)
+        //    {
+        //        string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+        //        fileName = Guid.NewGuid().ToString() + "-" + vm.SponsorImage.FileName;
+        //        string filePath = Path.Combine(uploadDir, fileName);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            vm.SponsorImage.CopyTo(fileStream);
+        //        }
+        //    }
+        //    return fileName;
+        //}
+
         public async Task<ActionResult<IEnumerable<Sponsor>>> EditOrDeleteSponsor()
         {
             //var sponsor = await _uow.SponsorRepository.GetAll().Include(x=>x.TeamSponsors).ThenInclude(x=>x.Team).ToListAsync();
-            var teamSponsor = await _uow.TeamSponsorRepository.GetAll().Include(x => x.Sponsor).Include(x => x.Team)
-                .ToListAsync();
-            return View(teamSponsor);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Sponsor>> AddSponsor(Sponsor sponsor)
-        {
-            //var sponser = new Sponsor();
-            //sponser.Name = teamsSponsor.Sponsor.Name;
-            //sponser.CompanyName = teamsSponsor.Sponsor.CompanyName;
-            //_uow.SponsorRepository.Create(sponser);
-            //foreach (var TeamId in teamsSponsor.Sponsor.TeamSponsors)
-            //{
-            //    var teamSponsor = new TeamSponsor();
-            //    teamSponsor.Sponsor = sponser;
-            //    teamSponsor.TeamId = TeamId.TeamId;
-            //    _uow.TeamSponsorRepository.Create(teamSponsor);
-            //}
-
-            //await _uow.Save();
-
-            _uow.SponsorRepository.Create(sponsor);
-            await _uow.Save();
-            return RedirectToAction("AddSponsor");
+            var sponsor = await _uow.SponsorRepository.GetAll().ToListAsync();
+            return View(sponsor);
         }
 
         [HttpGet]

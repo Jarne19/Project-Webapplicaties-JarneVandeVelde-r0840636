@@ -11,7 +11,7 @@ namespace Project_Webapplicaties.ViewModels
         public int TeamId { get; set; }
         public string Name { get; set; }
         public DivisionEnum Division { get; set; }
-
+        public ICollection<Game> Games { get; set; }
         public ICollection<Player> Players { get; set; }
         public List<Player> GetVerdedigers()
         {

@@ -1,4 +1,4 @@
-﻿@model List<TeamSponsor>
+﻿@model List<Sponsor>
 
 @{
     ViewData["Title"] = "Sponser aanpassen of verwijderen";
@@ -80,10 +80,14 @@
                 <table class="table table-light mt-5 shadoww">
                     <thead>
                     <tr>
-                        <th scope="col"><b>Sponser Id</b></th>
-                        <th scope="col"><b>Naam vab sponser</b></th>
-                        <th scope="col"><b>Naam van bedrijf</b></th>
-                        <th scope="col"><b>Teams die gesponserd worden</b></th>
+                        <th>
+                            Sponser id</th>
+                        <th scope="col">
+                            Naam</th>
+                        <th scope="col">
+                            naam bedrijf</th>
+                        <th scope="col">
+                            Foto</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,16 +95,16 @@
                     {
                         <tr>
                             <td>
-                                @item.TeamSponsorId
+                                @Html.DisplayFor(modelItem=>item.SponsorId)
                             </td>
                             <td>
-                                @item.Sponsor.Name
+                                @Html.DisplayFor(modelItem=>item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Sponsor.CompanyName)
+                                @Html.DisplayFor(modelItem=>item.CompanyName)
                             </td>
                             <td>
-                                @item.Team.Name
+                                <img src="~/Images/@item.SponsorImage" class="img-thumbnail" asp-append-version="true"/>
                             </td>
                             <td>
                                 <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.SponsorId">Aanpassen</a>

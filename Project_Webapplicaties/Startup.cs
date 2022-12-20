@@ -33,7 +33,7 @@ namespace Project_Webapplicaties
         {
             services.AddControllersWithViews();
             services.AddDbContext<VwGerheideContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("ProjectConnection")));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<VwGerheideContext>();
             services.AddRazorPages();
             services.Configure<IdentityOptions>(options =>

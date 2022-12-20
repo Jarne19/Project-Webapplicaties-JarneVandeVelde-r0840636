@@ -38,9 +38,19 @@
                     </div>
                 </div>
                 <div class="col footer-color p-5">
-                    <p class="nav-text"> <img src="img/schedule.png"/> @Model.PlayDate.Date</p>
-                    <p class="nav-text"> <img src="img/clock.png"/> @Model.PlayDate.TimeOfDay</p>
-                    <p class="nav-text"> <img src="img/placeholder.png"/> Gerheide (Kapel)<br/>2490 Balen</p>
+                    <p class="nav-text"> <span class="material-symbols-outlined">
+                        schedule
+                    </span> @Model.PlayDate.Date</p>
+                    <p class="nav-text"> <span class="material-symbols-outlined">
+                        calendar_month
+                    </span> @Model.PlayDate.TimeOfDay</p>
+                    <p class="nav-text"><span class="material-symbols-outlined">
+                        sports
+                    </span> @Model.Referee.Firstname @Model.Referee.Name</p>
+                    
+                    <p class="nav-text"> <span class="material-symbols-outlined">
+                        location_on
+                    </span> Gerheide (Kapel)<br/>2490 Balen</p>
                 </div>
             </div>
         </div>
