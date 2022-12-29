@@ -19,6 +19,26 @@
     <Compile Remove="Migrations\20221220165524_updatesponsor2.Designer.cs" />
     <Compile Remove="Migrations\20221220165804_updatesponsor3.cs" />
     <Compile Remove="Migrations\20221220165804_updatesponsor3.Designer.cs" />
+    <Compile Remove="Migrations\20221220183529_fixSponsorVSTeams.cs" />
+    <Compile Remove="Migrations\20221220183529_fixSponsorVSTeams.Designer.cs" />
+    <Compile Remove="Migrations\20221220202504_fixSponsorVSTeams_fix.cs" />
+    <Compile Remove="Migrations\20221220202504_fixSponsorVSTeams_fix.Designer.cs" />
+    <Compile Remove="Migrations\20221220203127_fixSponsorVSTeams_fix.cs" />
+    <Compile Remove="Migrations\20221220203127_fixSponsorVSTeams_fix.Designer.cs" />
+    <Compile Remove="Migrations\20221220203304_fixSponsorVSTeams_fix.cs" />
+    <Compile Remove="Migrations\20221220203304_fixSponsorVSTeams_fix.Designer.cs" />
+    <Compile Remove="Migrations\20221220203628_fixSponsorVSTeams.cs" />
+    <Compile Remove="Migrations\20221220203628_fixSponsorVSTeams.Designer.cs" />
+    <Compile Remove="Migrations\20221220203958_RemoveTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220203958_RemoveTeamSponsor.Designer.cs" />
+    <Compile Remove="Migrations\20221220204123_RemoveTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220204123_RemoveTeamSponsor.Designer.cs" />
+    <Compile Remove="Migrations\20221220204243_fixSponsorVSTeams.cs" />
+    <Compile Remove="Migrations\20221220204243_fixSponsorVSTeams.Designer.cs" />
+    <Compile Remove="Migrations\20221220205620_AddTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220205620_AddTeamSponsor.Designer.cs" />
+    <Compile Remove="Migrations\20221220205717_AddTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220205717_AddTeamSponsor.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

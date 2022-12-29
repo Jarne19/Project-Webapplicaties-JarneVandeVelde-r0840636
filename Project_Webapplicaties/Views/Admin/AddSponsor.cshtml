@@ -89,15 +89,10 @@
                             <span asp-validation-for="CompanyName" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label asp-for="SponsorImage" id="SponsorImage">Foto van sponser</label>
-                            <input asp-for="SponsorImage" type="file" id="SponsorImage" class="form-control-file">
-                            <span asp-validation-for="SponsorImage" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="TeamSponsors">Welk team sponseren</label>
-                            <select asp-for="TeamSponsors" asp-items="ViewBag.Teams" class="form-control">
+                            <label asp-for="Teams">Welk team sponseren</label>
+                            <select asp-for="@Model.Teams" multiple="multiple" asp-items="ViewBag.Teams" class="form-control">
                             </select>
-                            <span asp-validation-for="TeamSponsors" class="text-danger"></span>
+                            <span asp-validation-for="Teams" class="text-danger"></span>
                         </div>
                     </div>
                     <button type="submit" value="AddSponsor" class="btn btn-danger mt-3">Aanmaken</button>

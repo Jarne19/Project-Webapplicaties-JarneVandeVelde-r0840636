@@ -1,4 +1,6 @@
-﻿@model List<Sponsor>
+﻿@using System.Security.Cryptography.X509Certificates
+@using Microsoft.EntityFrameworkCore
+@model List<Sponsor>
 
 @{
     ViewData["Title"] = "Sponser aanpassen of verwijderen";
@@ -86,8 +88,7 @@
                             Naam</th>
                         <th scope="col">
                             naam bedrijf</th>
-                        <th scope="col">
-                            Foto</th>
+                        <th scope="col">Gesponserde teams</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -104,13 +105,13 @@
                                 @Html.DisplayFor(modelItem=>item.CompanyName)
                             </td>
                             <td>
-                                <img src="~/Images/@item.SponsorImage" class="img-thumbnail" asp-append-version="true"/>
+                                @Html.DisplayFor(modelItem=>item.TeamSponsors.Count)
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.SponsorId">Aanpassen</a>
+                                <a asp-controller="Admin" asp-action="EditSponsor" asp-route-id="@item.SponsorId">Aanpassen</a>
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.SponsorId">Verwijderen</a>
+                                <a asp-controller="Admin" asp-action="DeleteSponsor" asp-route-id="@item.SponsorId">Verwijderen</a>
                             </td>
                         </tr>
                     }

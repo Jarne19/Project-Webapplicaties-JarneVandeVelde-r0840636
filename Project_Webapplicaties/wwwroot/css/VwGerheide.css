@@ -31,7 +31,7 @@ body {
 
 
 .jumbotron-img2 {
-    background: url("../img/bg.jpg") no-repeat center center;
+    background: url("../Images/bg.jpg") no-repeat center center;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
@@ -40,7 +40,7 @@ body {
   /*  filter: blur(4px);*/
 }
 .bg-image {
-    background-image: url("../img/bg.jpg");
+    background-image: url("../Images/bg.jpg");
 }
 .shadoww {
     padding: 20px;

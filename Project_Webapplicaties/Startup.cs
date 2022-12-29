@@ -63,6 +63,8 @@ namespace Project_Webapplicaties
 
 
 
+            services.AddScoped<ITeamSponsorRepository, TeamSponsorRepository>();
+            services.AddScoped<ISponsorRepository, SponsorRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IRefereeRepository, RefereeRepository>();

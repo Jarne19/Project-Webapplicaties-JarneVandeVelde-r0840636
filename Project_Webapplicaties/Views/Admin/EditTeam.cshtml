@@ -1,5 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Admin";
+﻿@using Project_Webapplicaties.Models.Enums
+@model Team
+@{
+    ViewData["Title"] = "Team aanpassen";
 }
 <div class="container-fluid">
     <div class="row">
@@ -9,7 +11,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Index">
                             <span data-feather="home"></span>
-                            Admin 
+                            Admin
                         </a>
                     </li>
                     <li>
@@ -17,7 +19,7 @@
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
-                            Team Toevoegen 
+                            Team Toevoegen
                         </a>
                     </li>
                     <li class="nav-item">
@@ -37,13 +39,13 @@
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddReferee" class="nav-link">
-                            Scheidsrechter Toevoegen 
+                            Scheidsrechter Toevoegen
                         </a>
                     </li>
                     <li>
                         <h5 class="ml-2 mt-3"><b>Verwijderen / Updaten</b></h5>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeleteTeam" class="nav-link">
                             Team Verwijderen/Updaten
@@ -72,13 +74,38 @@
                 </ul>
             </div>
         </nav>
-
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
-            <div class="shadoww container m-5">
-                <img class="rounded mx-auto d-block mt-5" src="Images/LogoVwGerheide.png" />
-                <h1 class="text-center">Welkom admin!</h1>
-                <h3 class="text-center  mb-5">Maak je keuze wat je wilt doen.</h3>
+            <div class=" pt-3 pb-2 m-5 shadoww">
+                <h3 class="mb-5 display-4">Team aanpassen</h3>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.TeamId)
+                        <div class="form-row">
+                            <div class="form-group col-md-6 ">
+                                <label asp-for="Name">Team naam</label>
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Division">Afdeling</label>
+                                <select asp-for="Division" asp-items="Html.GetEnumSelectList<DivisionEnum>()" class="form-control">
+                                    <option value="">-- Divisie selecteren --</option>
+                                </select>
+                                <span asp-validation-for="Division" class="text-danger"></span>
+                            </div>
+                        </div>
+                    <input type="submit" value="Aanpassen" title="Aanpassen" name="Aanpassen" class="btn btn-danger" />
+                }
             </div>
         </main>
     </div>
 </div>
+
+@section Scripts
+{
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

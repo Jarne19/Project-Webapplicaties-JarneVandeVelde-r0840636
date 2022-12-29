@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Admin";
+﻿@model Project_Webapplicaties.ViewModels.EditSponsorViewModel
+@{
+    ViewData["Title"] = "Sponser aanpassen";
 }
 <div class="container-fluid">
     <div class="row">
@@ -9,7 +10,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Index">
                             <span data-feather="home"></span>
-                            Admin 
+                            Admin
                         </a>
                     </li>
                     <li>
@@ -17,7 +18,7 @@
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddTeam" class="nav-link">
-                            Team Toevoegen 
+                            Team Toevoegen
                         </a>
                     </li>
                     <li class="nav-item">
@@ -37,13 +38,13 @@
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="AddReferee" class="nav-link">
-                            Scheidsrechter Toevoegen 
+                            Scheidsrechter Toevoegen
                         </a>
                     </li>
                     <li>
                         <h5 class="ml-2 mt-3"><b>Verwijderen / Updaten</b></h5>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a asp-controller="Admin" asp-action="EditOrDeleteTeam" class="nav-link">
                             Team Verwijderen/Updaten
@@ -72,13 +73,40 @@
                 </ul>
             </div>
         </nav>
-
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
-            <div class="shadoww container m-5">
-                <img class="rounded mx-auto d-block mt-5" src="Images/LogoVwGerheide.png" />
-                <h1 class="text-center">Welkom admin!</h1>
-                <h3 class="text-center  mb-5">Maak je keuze wat je wilt doen.</h3>
+            <div class=" pt-3 pb-2 m-5 shadoww">
+                <h3 class="mb-5 display-4">Sponser aanpassen</h3>
+                <form asp-action="EditSponsor">
+                    <input type="hidden" asp-for="SponsorId" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 ">
+                            <label asp-for="Name">Naam van sponser</label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="CompanyName">Naam van de bedrijf</label>
+                            <input asp-for="CompanyName" class="form-control">
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Teams">Welk team sponseren</label>
+                            <select asp-for="Teams" multiple="multiple" asp-items="ViewBag.Teams" class="form-control">
+                            </select>
+                            <span asp-validation-for="Teams" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="submit" value="Aanpassen" title="Aanpassen" name="Aanpassen" class="btn btn-danger"/>
+                </form>
             </div>
         </main>
     </div>
 </div>
+
+@section Scripts
+{
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

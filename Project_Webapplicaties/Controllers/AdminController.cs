@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Definux.Utilities.Objects;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing.Constraints;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.Repository.Interfaces;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
@@ -28,13 +19,18 @@ namespace Project_Webapplicaties.Controllers
         private readonly IUnitOfWork _uow;
         private readonly ITeamRepository _teamRepository;
         private readonly IRefereeRepository _refereeRepository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository,IWebHostEnvironment webHostEnvironment)
+        private readonly VwGerheideContext _context;
+        private readonly ISponsorRepository _sponsorRepository;
+        private readonly ITeamSponsorRepository _teamSponsorRepository;
+
+        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository, VwGerheideContext context, ISponsorRepository sponsorRepository, ITeamSponsorRepository teamSponsorRepository)
         {
             _uow = uow;
             _teamRepository = teamRepository;
             _refereeRepository = refereeRepository;
-            _webHostEnvironment = webHostEnvironment;
+            _context = context;
+            _sponsorRepository = sponsorRepository;
+            _teamSponsorRepository = teamSponsorRepository;
         }
         public IActionResult Index()
         {
@@ -150,7 +146,7 @@ namespace Project_Webapplicaties.Controllers
         }
         public async Task<ActionResult<IEnumerable<Game>>> EditOrDeleteGame()
         {
-            var game = await _uow.GameRepository.GetAll().Include(x=>x.Team).Include(x=>x.Referee).ToListAsync();
+            var game = await _uow.GameRepository.GetAll().Include(x => x.Team).Include(x => x.Referee).ToListAsync();
             return View(game);
         }
 
@@ -250,20 +246,20 @@ namespace Project_Webapplicaties.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Sponsor>> AddSponsor(AddSponsorViewModel vm)
-        //{
-        //    string stringFileName = UploadFile(vm);
-        //    var sponsor = new Sponsor
-        //    {
-        //        Name = vm.Name,
-        //        CompanyName = vm.CompanyName,
-        //        SponsorImage = stringFileName
-        //    };
-        //    _uow.SponsorRepository.Create(sponsor);
-        //    await _uow.Save();
-        //    return RedirectToAction("AddSponsor");
-        //}
+        [HttpPost]
+        public async Task<ActionResult<Sponsor>> AddSponsor(AddSponsorViewModel vm)
+        {
+            //var fileName = UploadFile(vm);
+            var sponsor = new Sponsor
+            {
+                Name = vm.Name,
+                CompanyName = vm.CompanyName,
+            };
+            var id = await _sponsorRepository.Save(sponsor);
+            List<TeamSponsor> teamSponsors = vm.Teams.Select(team => new TeamSponsor() { TeamId = team, SponsorId = id }).ToList();
+            await _teamSponsorRepository.Save(teamSponsors);
+            return RedirectToAction("AddSponsor");
+        }
 
         //private string UploadFile(AddSponsorViewModel vm)
         //{
@@ -283,18 +279,26 @@ namespace Project_Webapplicaties.Controllers
 
         public async Task<ActionResult<IEnumerable<Sponsor>>> EditOrDeleteSponsor()
         {
-            //var sponsor = await _uow.SponsorRepository.GetAll().Include(x=>x.TeamSponsors).ThenInclude(x=>x.Team).ToListAsync();
-            var sponsor = await _uow.SponsorRepository.GetAll().ToListAsync();
+            var sponsor = await _uow.SponsorRepository.GetAll().Include(x=>x.TeamSponsors).ThenInclude(x=>x.Team).ToListAsync();
             return View(sponsor);
         }
-
-        [HttpGet]
-        public async Task<ActionResult<Sponsor>> EditSponsor(int id)
+        
+        public async Task<IActionResult> EditSponsor(int? id)
         {
             ViewBag.Teams = GetTeams();
-            var sponsor = await _uow.SponsorRepository.GetById(id);
-            if (sponsor == null) return NotFound();
-            return View(sponsor);
+            if (id == null)
+                return NotFound();
+            var sponsor = await _context.Sponsors.FindAsync(id);
+            if (sponsor == null) 
+                return NotFound();
+            EditSponsorViewModel viewModel = new EditSponsorViewModel()
+            {
+                SponsorId = sponsor.SponsorId,
+                Name = sponsor.Name,
+                CompanyName = sponsor.CompanyName,
+                Teams = new List<int> { sponsor.TeamSponsors.Count }
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -318,39 +322,19 @@ namespace Project_Webapplicaties.Controllers
 
         #endregion
 
-        private List<SelectListItem> GetTeams()
+        private SelectList GetTeams()
         {
-            var teams = new List<SelectListItem>();
-            PaginatedList<Team> team = _teamRepository.GetTeams("Name", SortOrder.Ascending);
-            teams = team.Items.Select(x => new SelectListItem()
-            {
-                Value = x.TeamId.ToString(),
-                Text = x.Name
-            }).ToList();
-            var defItem = new SelectListItem()
-            {
-                Value = "",
-                Text = "-- Selecteer een team --"
-            };
-            teams.Insert(0, defItem);
-            return teams;
+            var teams = _uow.TeamRepository.GetAll().ToDictionary(t => t.TeamId, t => t.Name);
+            teams.Add(-1, "-- Selecteer een team --");
+            var list = new SelectList(teams.OrderBy(x => x.Key), "Key", "Value");
+            return list;
         }
-        private List<SelectListItem> GetReferees()
+        private SelectList GetReferees()
         {
-            var referees = new List<SelectListItem>();
-            PaginatedList<Referee> referee = _refereeRepository.GetReferee("Name", SortOrder.Ascending);
-            referees = referee.Items.Select(x => new SelectListItem()
-            {
-                Value = x.RefereeId.ToString(),
-                Text = $"{x.Firstname} {x.Name}"
-            }).ToList();
-            var defItem = new SelectListItem()
-            {
-                Value = "",
-                Text = "-- Selecteer een scheidsrechter --"
-            };
-            referees.Insert(0, defItem);
-            return referees;
+            var referees = _uow.RefereeRepository.GetAll().ToDictionary(r => r.RefereeId, r => r.Name);
+            referees.Add(-1, "-- Selecteer een scheidsrechter --");
+            var list = new SelectList(referees.OrderBy(x => x.Key), "Key", "Value");
+            return list;
         }
     }
 }
