@@ -100,7 +100,7 @@
                                 @item.Name
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.Birtdate)
+                                @Html.DisplayFor(modelItem=>item.Birtdate.Date)
                             </td>
                             <td>
                                 <a asp-controller="Admin" asp-action="EditReferee" asp-route-id="@item.RefereeId">Aanpassen</a>

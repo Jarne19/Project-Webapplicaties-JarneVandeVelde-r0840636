@@ -1,5 +1,4 @@
-﻿using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
-using Project_Webapplicaties.Models;
+﻿using Project_Webapplicaties.Models;
 using Project_Webapplicaties.Models.Enums;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +14,22 @@ namespace Project_Webapplicaties.ViewModels
         public ICollection<Player> Players { get; set; }
         public List<Player> GetVerdedigers()
         {
-            var verdedigers = Players.Where(x => x.Position == (Models.Enums.PositionEnum)1).ToList();
+            var verdedigers = Players.Where(x => x.Position == (PositionEnum)1).ToList();
             return verdedigers;
         }
         public List<Player> GetKeepers()
         {
-            var keepers = Players.Where(x => x.Position == (Models.Enums.PositionEnum)0).ToList();
+            var keepers = Players.Where(x => x.Position == 0).ToList();
             return keepers;
         }
         public List<Player> GetMiddenvelders()
         {
-            var middenvelders = Players.Where(x => x.Position == (Models.Enums.PositionEnum)2).ToList();
+            var middenvelders = Players.Where(x => x.Position == (PositionEnum)2).ToList();
             return middenvelders;
         }
         public List<Player> GetAanvallers()
         {
-            var aanvallers = Players.Where(x => x.Position == (Models.Enums.PositionEnum)3).ToList();
+            var aanvallers = Players.Where(x => x.Position == (PositionEnum)3).ToList();
             return aanvallers;
         }
     }

@@ -39,28 +39,7 @@ namespace Project_Webapplicaties.Controllers
             {
                 TeamListViewModel model = new TeamListViewModel();
                 model.Teams = _uow.TeamRepository.GetAll().Include(x=>x.Players).ToList();
-                return View("",model);
-            }
-        }
-
-        public IActionResult GamesPerTeam(int id)
-        {
-            Team team = _uow.TeamRepository.GetAll().Where(x => x.TeamId == id).Include(x=>x.Games).FirstOrDefault();
-            if (team != null)
-            {
-                TeamDetailsViewModel vm = new TeamDetailsViewModel()
-                {
-                    Name = team.Name,
-                    Division = team.Division,
-                    Games = _uow.GameRepository.GetAll().Where(x => x.GameId == team.TeamId).ToList()
-                };
-                return View(vm);
-            }
-            else
-            {
-                TeamListViewModel model = new TeamListViewModel();
-                model.Teams = _uow.TeamRepository.GetAll().Include(x => x.Players).ToList();
-                return View("", model);
+                return View(string.Empty,model);
             }
         }
     }

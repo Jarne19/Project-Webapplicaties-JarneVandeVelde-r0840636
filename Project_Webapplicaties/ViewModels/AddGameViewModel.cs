@@ -1,7 +1,5 @@
 ﻿using Project_Webapplicaties.Models.Enums;
 using System;
-using System.Collections.Generic;
-using Project_Webapplicaties.Models;
 
 namespace Project_Webapplicaties.ViewModels
 {

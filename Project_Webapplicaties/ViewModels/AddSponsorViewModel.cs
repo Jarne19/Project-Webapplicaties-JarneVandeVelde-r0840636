@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
-using Project_Webapplicaties.Models;
 
 namespace Project_Webapplicaties.ViewModels
 {

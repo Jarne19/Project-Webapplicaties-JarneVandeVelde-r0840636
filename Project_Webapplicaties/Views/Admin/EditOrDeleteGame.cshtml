@@ -101,6 +101,8 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem=>item.Referee.Firstname)
+                                @Html.DisplayFor(modelItem=>item.Referee.Name)
+
                             </td>
                             <td>
                                 <a asp-controller="Admin" asp-action="EditGame" asp-route-id="@item.GameId">Aanpassen</a>

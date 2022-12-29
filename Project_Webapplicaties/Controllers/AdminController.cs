@@ -17,17 +17,13 @@ namespace Project_Webapplicaties.Controllers
     public class AdminController : Controller
     {
         private readonly IUnitOfWork _uow;
-        private readonly ITeamRepository _teamRepository;
-        private readonly IRefereeRepository _refereeRepository;
         private readonly VwGerheideContext _context;
         private readonly ISponsorRepository _sponsorRepository;
         private readonly ITeamSponsorRepository _teamSponsorRepository;
 
-        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository, VwGerheideContext context, ISponsorRepository sponsorRepository, ITeamSponsorRepository teamSponsorRepository)
+        public AdminController(IUnitOfWork uow, VwGerheideContext context, ISponsorRepository sponsorRepository, ITeamSponsorRepository teamSponsorRepository)
         {
             _uow = uow;
-            _teamRepository = teamRepository;
-            _refereeRepository = refereeRepository;
             _context = context;
             _sponsorRepository = sponsorRepository;
             _teamSponsorRepository = teamSponsorRepository;
@@ -104,6 +100,7 @@ namespace Project_Webapplicaties.Controllers
         {
             _uow.TeamRepository.Create(team);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{team.Name} is toegevoegd";
             return RedirectToAction("AddTeam");
         }
 
@@ -155,6 +152,7 @@ namespace Project_Webapplicaties.Controllers
         {
             _uow.GameRepository.Create(game);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Wedstrijd is toegevoegd";
             return RedirectToAction("AddGame");
         }
 
@@ -206,6 +204,7 @@ namespace Project_Webapplicaties.Controllers
         {
             _uow.RefereeRepository.Create(referee);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{referee.Firstname} {referee.Name} is toegevoegd";
             return RedirectToAction("AddReferee");
         }
 
@@ -258,6 +257,7 @@ namespace Project_Webapplicaties.Controllers
             var id = await _sponsorRepository.Save(sponsor);
             List<TeamSponsor> teamSponsors = vm.Teams.Select(team => new TeamSponsor() { TeamId = team, SponsorId = id }).ToList();
             await _teamSponsorRepository.Save(teamSponsors);
+            TempData["SuccessMessage"] = $"Sponsor is toegevoegd";
             return RedirectToAction("AddSponsor");
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using Project_Webapplicaties.Models.Enums;
 
@@ -17,10 +16,8 @@ namespace Project_Webapplicaties.Models
         public int? PloegId { get; set; }
 
         public Team Team { get; set; }
-        
-        public int GetAge()
-        {
-            return DateTime.Now.Year - Birthdate.Year;
-        }
+
+        public int GetAge => DateTime.Now.Year - Birthdate.Year;
+        public string GetFullName => $"{Firstname} {Name}";
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Project_Webapplicaties.Models;
 using Project_Webapplicaties.Models.Enums;
 
@@ -19,10 +17,6 @@ namespace Project_Webapplicaties.ViewModels
         public int? PloegId { get; set; }
         public Team team { get; set; }
         public string GetFullName => $"{Firstname} {Name}";
-
-        public int GetAge()
-        {
-            return DateTime.Now.Year - Birthdate.Year;
-        }
+        public int GetAge => DateTime.Now.Year - Birthdate.Year;
     }
 }

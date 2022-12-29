@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Project_Webapplicaties.Models;
-using Project_Webapplicaties.Models.Enums;
+﻿using Project_Webapplicaties.Models.Enums;
 
 namespace Project_Webapplicaties.ViewModels
 {

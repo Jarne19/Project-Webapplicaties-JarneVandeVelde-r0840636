@@ -9,7 +9,7 @@
                 <h3 class="mb-3 display-4">@Model.Name</h3>
                 <h5>@Model.Division</h5>
                 <a class="btn btn-danger mt-4" asp-controller="Team" asp-action="Index">Terug naar teams</a><br/>
-                <a class="btn btn-danger mt-4" asp-controller="Team" asp-action="GamesPerTeam" asp-route-id="@Model.TeamId">Wedstrijden bekijken van @Model.Name</a>
+                <a class="btn btn-danger mt-4" asp-controller="Home" asp-action="Index">Terug naar home</a><br/>
             </div>
             <div class="col-5 shadoww mr-2">
                 <img src="~/Images/team-placeholder.jpg" class="card-img-top" alt="..." height="300">
@@ -27,7 +27,7 @@
                         <div class="card shadow" style="width: 18rem;">
                             <img src="~/Images/Player.jpg" class="card-img-top" alt="..." height="250">
                             <div class="card-body">
-                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br /> @item.GetAge() Jaar</h5>
+                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br /> @item.GetAge Jaar</h5>
                                 <p class="card-text">@item.Position</p>
                                 <hr />
                                 <a class="btn btn-danger" asp-controller="Player" asp-action="Details" asp-route-id="@item.PlayerId">Details</a>
@@ -45,7 +45,7 @@
                         <div class="card shadow" style="width: 18rem;">
                             <img src="~/Images/Player.jpg" class="card-img-top" alt="..." height="250">
                             <div class="card-body">
-                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.GetAge() Jaar</h5>
+                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.GetAge Jaar</h5>
                                 <p class="card-text">@item.Position</p>
                                 <hr/>
                                 <a class="btn btn-danger" asp-controller="Player" asp-action="Details" asp-route-id="@item.PlayerId">Details</a>
@@ -63,7 +63,7 @@
                         <div class="card shadow" style="width: 18rem;">
                             <img src="~/Images/Player.jpg" class="card-img-top" alt="..." height="250">
                             <div class="card-body">
-                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.GetAge() Jaar</h5>
+                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.GetAge Jaar</h5>
                                 <p class="card-text">@item.Position</p>
                                 <hr/>
                                 <a class="btn btn-danger" asp-controller="Player" asp-action="Details" asp-route-id="@item.PlayerId">Details</a>
@@ -81,7 +81,7 @@
                         <div class="card shadow" style="width: 18rem;">
                             <img src="~/Images/Player.jpg" class="card-img-top" alt="..." height="250">
                             <div class="card-body">
-                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.GetAge() Jaar</h5>
+                                <h5 class="card-title"><b>@item.Firstname @item.Name</b><br/> @item.GetAge Jaar</h5>
                                 <p class="card-text">@item.Position</p>
                                 <hr/>
                                 <a class="btn btn-danger" asp-controller="Player" asp-action="Details" asp-route-id="@item.PlayerId">Details</a>

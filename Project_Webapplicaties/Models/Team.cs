@@ -6,9 +6,6 @@ namespace Project_Webapplicaties.Models
 {
     public class Team
     {
-        public Team()
-        {
-        }
         public int TeamId { get; set; }
         public string Name { get; set; }
         public DivisionEnum Division { get; set; }
