@@ -1,5 +1,5 @@
 ﻿.size {
-    font-size: 20px;
+    height: 50px;
 }
 .color {
     background: #FF2E2E;
@@ -11,6 +11,11 @@
     background: #474747;
     border-top-color: #ff2e2e;
 }
+
+.material-symbols-outlined {
+     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
+ }
+
 .red-text {
     color: #ff2e2e;
 }
@@ -19,4 +24,27 @@
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+}
+body {
+    font-family: 'Spline Sans', sans-serif;
+}
+
+
+.jumbotron-img2 {
+    background: url("../Images/bg.jpg") no-repeat center center;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    background-repeat: repeat;
+    opacity: 0.9;
+}
+.bg-image {
+    background-image: url("../Images/bg.jpg");
+}
+.shadoww {
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }

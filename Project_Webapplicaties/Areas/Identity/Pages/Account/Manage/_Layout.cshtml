@@ -1,0 +1,29 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+<div class="jumbotron-img2">
+<div class="container shadoww">
+    <h2 class="display-4 mb-3" >Beheer je account</h2>
+    <div>
+        <hr class="mb-5"/>
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

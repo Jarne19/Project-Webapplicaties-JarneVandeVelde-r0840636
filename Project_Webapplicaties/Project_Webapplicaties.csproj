@@ -5,6 +5,44 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20221220160711_updatesponsorl.cs" />
+    <Compile Remove="Migrations\20221220160711_updatesponsorl.Designer.cs" />
+    <Compile Remove="Migrations\20221220162124_updatesponsorl.cs" />
+    <Compile Remove="Migrations\20221220162124_updatesponsorl.Designer.cs" />
+    <Compile Remove="Migrations\20221220165037_updatesponsor2.cs" />
+    <Compile Remove="Migrations\20221220165037_updatesponsor2.Designer.cs" />
+    <Compile Remove="Migrations\20221220165254_updatesponsor2.cs" />
+    <Compile Remove="Migrations\20221220165254_updatesponsor2.Designer.cs" />
+    <Compile Remove="Migrations\20221220165440_updatesponsor2.cs" />
+    <Compile Remove="Migrations\20221220165440_updatesponsor2.Designer.cs" />
+    <Compile Remove="Migrations\20221220165524_updatesponsor2.cs" />
+    <Compile Remove="Migrations\20221220165524_updatesponsor2.Designer.cs" />
+    <Compile Remove="Migrations\20221220165804_updatesponsor3.cs" />
+    <Compile Remove="Migrations\20221220165804_updatesponsor3.Designer.cs" />
+    <Compile Remove="Migrations\20221220183529_fixSponsorVSTeams.cs" />
+    <Compile Remove="Migrations\20221220183529_fixSponsorVSTeams.Designer.cs" />
+    <Compile Remove="Migrations\20221220202504_fixSponsorVSTeams_fix.cs" />
+    <Compile Remove="Migrations\20221220202504_fixSponsorVSTeams_fix.Designer.cs" />
+    <Compile Remove="Migrations\20221220203127_fixSponsorVSTeams_fix.cs" />
+    <Compile Remove="Migrations\20221220203127_fixSponsorVSTeams_fix.Designer.cs" />
+    <Compile Remove="Migrations\20221220203304_fixSponsorVSTeams_fix.cs" />
+    <Compile Remove="Migrations\20221220203304_fixSponsorVSTeams_fix.Designer.cs" />
+    <Compile Remove="Migrations\20221220203628_fixSponsorVSTeams.cs" />
+    <Compile Remove="Migrations\20221220203628_fixSponsorVSTeams.Designer.cs" />
+    <Compile Remove="Migrations\20221220203958_RemoveTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220203958_RemoveTeamSponsor.Designer.cs" />
+    <Compile Remove="Migrations\20221220204123_RemoveTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220204123_RemoveTeamSponsor.Designer.cs" />
+    <Compile Remove="Migrations\20221220204243_fixSponsorVSTeams.cs" />
+    <Compile Remove="Migrations\20221220204243_fixSponsorVSTeams.Designer.cs" />
+    <Compile Remove="Migrations\20221220205620_AddTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220205620_AddTeamSponsor.Designer.cs" />
+    <Compile Remove="Migrations\20221220205717_AddTeamSponsor.cs" />
+    <Compile Remove="Migrations\20221220205717_AddTeamSponsor.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Definux.Utilities.Objects" Version="1.0.40" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.30" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.30" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.30" />
@@ -15,10 +53,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

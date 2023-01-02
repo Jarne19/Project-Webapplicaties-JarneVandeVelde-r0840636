@@ -1,0 +1,46 @@
+﻿@model Project_Webapplicaties.ViewModels.TeamDetailsViewModel
+@{
+    ViewData["Title"] = "Wedstrijden";
+}
+<div class="jumbotron-img2">
+    <div class="container shadoww">
+        <div class="row">
+            <div class="col-10">
+                <h3 class="mb-5 display-4">Wedstrijden van @Model.Name</h3>
+            </div>
+            <div class="col-2">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-danger mt-4">Terug naar home</a>
+            </div>
+        </div>
+
+        <table class="table table-light mt-5 shadoww">
+            <thead>
+            <tr>
+                <th scope="col"><b>Datum van wedstrijd</b></th>
+                <th scope="col"><b>Thuis team</b></th>
+                <th scope="col"><b>Uit team</b></th>
+                <th scope="col"><b>Scheidsrechter</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Games)
+            {
+                <tr>
+                    <td>
+                        @item.PlayDate
+                    </td>
+                    <td>
+                        @item.Team.Name
+                    </td>
+                    <td>
+                        @item.AwayTeam
+                    </td>
+                    <td>
+                        @item.Referee.Firstname @item.Referee.Name
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

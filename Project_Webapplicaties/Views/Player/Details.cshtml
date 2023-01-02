@@ -1,0 +1,42 @@
+﻿@model Project_Webapplicaties.ViewModels.PlayerDetailsViewModel
+
+
+@{
+    ViewData["Title"] = $"{Model.GetFullName}";
+}
+<div class="jumbotron-img2">
+    <div class="container shadoww">
+        <div class="row">
+            <div class="col">
+                <img src="~/Images/Player.jpg" class="card-img-top mt-5 mb-5 card-img shadow center-img" style="height: 350px; width: 350px" alt="@Model.Firstname @Model.Name">
+            </div>
+            <div class="col mt-5 mb-5">
+                <h2 class="display-4">@Model.GetFullName</h2>
+                <h3>@Model.GetAge Jaar</h3>
+                <h5>@Model.Position</h5>
+                <div class="card mt-3 shadow">
+                    <div class="card-header blue-text color nav-text">
+                        <b>Informatie</b>
+                    </div>
+                    <table class="table table-bordered ">
+                        <tbody>
+                            <tr>
+                                <td><b>Beste been</b></td>
+                                <td>@Model.BestLeg</td>
+                            </tr>
+                            <tr>
+                                <td><b>Geboortedatum</b></td>
+                                <td>@Html.DisplayFor(modelItem=>Model.Birthdate)</td>
+                            </tr>
+                            <tr>
+                                <td><b>Ploeg</b></td> 
+                                <td><a asp-controller="Team" asp-action="Details" asp-route-id="@Model.team.TeamId">@Model.team.Name</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a class="btn btn-danger mt-3 nav-text" asp-controller="Player" asp-action="Index">Terug</a>
+            </div>
+        </div>
+    </div>
+</div>

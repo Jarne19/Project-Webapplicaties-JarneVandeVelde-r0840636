@@ -1,148 +1,87 @@
-﻿@{
+﻿@model Project_Webapplicaties.ViewModels.HomeListViewModel
+@{
     ViewData["Title"] = "Home";
 }
 
-<div class="jumbotron color">
-    <div class="container ">
+<div class="jumbotron jumbotron-img2">
+    <div class="container">
         <div class="text-center">
-            <img class="rounded" src="img/LogoVwGerheide.png" height="150" />
+            <img class="rounded" src="Images/LogoVwGerheide.png" height="150" />
         </div>
-        <h3 class="text-center display-4 nav-text mt-3">Welkom bij Vw Geheide</h3>
+        <h3 class="text-center display-3 nav-text mt-3">Welkom bij Vw Geheide</h3>
     </div>
 </div>
 <div class="container">
-    <h3 class="text-center mb-2">Wedstrijden</h3>
+    <h3 class="text-center mb-2 display-4">Wedstrijden</h3>
     <div class="row">
-        <div class="col-6 mt-3">
-            <div class="card text-center">
-                <div class="card-header">
-                    <b>ZA. 15/10 - 15:00</b>
-                </div>
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td>
-                                -
-                                <br />
-                                <b>Gerheide</b>
-                            </td>
-                            <td>
-                                -
-                                <br />
-                                <b>Red Star</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="card-footer">
-                    <a asp-controller="" asp-action=""><b>MatchDetails</b></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="card text-center">
-                <div class="card-header">
-                    <b>ZA. 22/10 - 15:00</b>
-                </div>
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td>
-                                -
-                                <br />
-                                <b>GSK</b>
-                            </td>
-                            <td>
-                                -
-                                <br />
-                                <b>Gerheide</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="card-footer">
-                    <a asp-controller="" asp-action=""><b>MatchDetails</b></a>
+        @foreach (var item in Model.GetGames())
+        {
+            <div class="col-6 mt-3">
+                <div class="card text-center shadow">
+                    <div class="card-header color nav-text">
+                        @item.PlayDate
+                    </div>
+                    <table class="table mt-3 table-bordered ">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    -
+                                    <br />
+                                    <b>@Html.DisplayFor(modelItem => item.Team.Name)</b>
+                                </td>
+                                <td style="width: 260px">
+                                    -
+                                    <br />
+                                    <b>@item.AwayTeam</b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card-footer footer-color ">
+                        <a class="nav-text" asp-controller="Game" asp-action="Details" asp-route-id="@item.GameId"><b>MatchDetails</b></a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
-    <div class="text-center"><a type="button" class="btn btn-danger mt-4 nav-text">Meer wedstrijden</a></div>
-</div>
+    <div class="text-center"><a asp-controller="Game" asp-action="Index" type="button" class="btn btn-danger mt-4 nav-text">Meer wedstrijden</a></div>
+</div>df
 <div class="jumbotron footer-color mt-4">
     <div class="container ">
-        <h3 class="text-center mb-3 nav-text">Nieuws</h3>
+        <h3 class="text-center mb-3 nav-text display-4">Teams</h3>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <img src="/img/LogoVoetbal.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            @foreach (var item in @Model.GetTeams())
+            {
+                <div class="col-sm m-2 mb-5">
+                    <div class="card shadow" style="width: 20rem;">
+                        <img src="~/Images/Team.jpg" class="card-img-top" alt="@item.Name">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>@item.Name</b></h5>
+                            <p class="card-text">@item.Division</p>
+                            <hr />
+                            <a class="btn btn-danger" asp-controller="Team" asp-action="Details" asp-route-id="@item.TeamId">Team bekijken</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <img src="/img/LogoVoetbal.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <img src="/img/LogoVoetbal.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
-        <div class="text-center"><a type="button" class="btn btn-danger mt-4 nav-text">Meer nieuws</a></div>
+        <div class="text-center"><a type="button" asp-controller="Team" asp-action="Index" class="btn btn-danger  nav-text">Meer teams bekijken</a></div>
     </div>
 </div>
 <div class="container">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <img src="/img/Croonen-Nissan-logo.jpg" class="d-block w-50" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="img/2560px-Nyrstar_logo.svg.png" class="d-block w-75" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="img/saller.png" class="d-block w-75" alt="...">
+    <h1 class="display-4 text-center mb-4">Hoofdsponsers</h1>
+    <div class="row">
+        @foreach (var item in @Model.GetSponsors())
+        {
+            <div class="col-sm m-2 mb-5">
+                <div class="card shadow" style="width: 20rem;">
+                    <img src="~/Images/@item.Image" class="card-img-top" height="250" alt="@item.CompanyName">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>@item.CompanyName</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <img src="/img/Croonen-Nissan-logo.jpg" class="d-block w-50" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="img/2560px-Nyrstar_logo.svg.png" class="d-block w-75" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="img/saller.png" class="d-block w-75" alt="...">
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col-md-4 text-center center-img">
-                        <img src="/img/Croonen-Nissan-logo.jpg" class="d-block w-50" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center center-img">
-                        <img src="img/2560px-Nyrstar_logo.svg.png" class="d-block w-75" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center center-img">
-                        <img src="img/saller.png" class="d-block w-75" alt="...">
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>
 

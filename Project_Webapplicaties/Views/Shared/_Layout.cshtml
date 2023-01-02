@@ -8,17 +8,21 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/VwGerheide.css" />
     <link rel="icon" type="image/png" sizes="32x32"
-          href="~/img/LogoVwGerheide.png">
+          href="~/Images/LogoVwGerheide.png">
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark color">
-        <div class="container size">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/LogoVwGerheide.png" height="85" /></a>
+        <div class="container ">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/LogoVwGerheide.png" height="60" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial" />
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link nav-text ml-2 " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -27,30 +31,40 @@
                         <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Team" asp-action="Index">Teams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Spelers</a>
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
-                    </li>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
-<main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-<footer class="pt-4 my-md-5 pt-md-5 border-top footer-color">
+    <main role="main">
+        <div id="myModalSuccess" class="modal fade text-width:30%;" role="dialog">
+            <div class="modal-dialog">
+                <div id="MyModalSuccessAlertBody" class="modal-body alert alert-success">
+                    Gelukt!
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+    </main>
+    <footer class="pt-4  footer-color">
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
                     <h6 class="red-text"> Vw Gerheide</h6>
-                    <p class="nav-text">Gerheide (Kapel)<br/>2490 Balen</p>
+                    <p class="nav-text">Gerheide (Kapel)<br />2490 Balen</p>
                 </div>
                 <div class="col-md-5">
-                    <img class="" src="/img/LogoVwGerheide.png" height="85"/>
+                    <img class="" src="/Images/LogoVwGerheide.png" height="85" />
                 </div>
                 <div class="col-md-2 align-items-lg-end">
                     <ul class="list-unstyled">
@@ -61,13 +75,10 @@
                             <a class="nav-text" asp-area="" asp-controller="Team" asp-action="Index">Teams</a>
                         </li>
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Spelers</a>
+                            <a class="nav-text" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
                         </li>
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
-                        </li>
-                        <li>
-                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
+                            <a class="nav-text" asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
                         </li>
                     </ul>
                 </div>
