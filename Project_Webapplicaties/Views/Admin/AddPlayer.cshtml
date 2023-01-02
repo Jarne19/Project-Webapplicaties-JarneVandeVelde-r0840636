@@ -96,6 +96,7 @@
                             <label asp-for="PloegId">Team</label>
                             <select asp-for="PloegId" asp-items="ViewBag.Teams" class="form-control">
                             </select>
+                            <span asp-validation-for="PloegId" class="text-danger"></span>
                         </div>
                         
                         <div class="form-group col-md-6">

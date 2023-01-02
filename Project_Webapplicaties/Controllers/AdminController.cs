@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,13 +23,15 @@ namespace Project_Webapplicaties.Controllers
         private readonly VwGerheideContext _context;
         private readonly ISponsorRepository _sponsorRepository;
         private readonly ITeamSponsorRepository _teamSponsorRepository;
+        private readonly IWebHostEnvironment _environment;
 
-        public AdminController(IUnitOfWork uow, VwGerheideContext context, ISponsorRepository sponsorRepository, ITeamSponsorRepository teamSponsorRepository)
+        public AdminController(IUnitOfWork uow, VwGerheideContext context, ISponsorRepository sponsorRepository, ITeamSponsorRepository teamSponsorRepository,IWebHostEnvironment environment)
         {
             _uow = uow;
             _context = context;
             _sponsorRepository = sponsorRepository;
             _teamSponsorRepository = teamSponsorRepository;
+            _environment = environment;
         }
         public IActionResult Index()
         {
@@ -41,6 +46,7 @@ namespace Project_Webapplicaties.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Player>> AddPlayer(Player player)
         {
             _uow.PlayerRepository.Create(player);
@@ -63,11 +69,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPlayer(int id, Player player)
         {
             if (id != player.PlayerId) return BadRequest();
             _uow.PlayerRepository.Update(player);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is aangepast";
             return RedirectToAction("EditOrDeletePlayer");
         }
 
@@ -78,6 +86,7 @@ namespace Project_Webapplicaties.Controllers
             if (player == null) return NotFound();
             _uow.PlayerRepository.Delete(player);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is verwijderd";
             return RedirectToAction("EditOrDeletePlayer");
         }
 
@@ -96,6 +105,7 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Team>> AddTeam(Team team)
         {
             _uow.TeamRepository.Create(team);
@@ -113,11 +123,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditTeam(int id, Team team)
         {
             if (id != team.TeamId) return BadRequest();
             _uow.TeamRepository.Update(team);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{team.Name} is aangepast";
             return RedirectToAction("EditOrDeleteTeam");
         }
 
@@ -128,6 +140,7 @@ namespace Project_Webapplicaties.Controllers
             if (team == null) return NotFound();
             _uow.TeamRepository.Delete(team);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{team.Name} is verwijderd";
             return RedirectToAction("EditOrDeleteTeam");
         }
 
@@ -148,6 +161,7 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Game>> AddGame(Game game)
         {
             _uow.GameRepository.Create(game);
@@ -167,11 +181,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditGame(int id, Game game)
         {
             if (id != game.GameId) return BadRequest();
             _uow.GameRepository.Update(game);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Wedstrijd is aangepast";
             return RedirectToAction("EditOrDeleteGame");
         }
 
@@ -182,6 +198,7 @@ namespace Project_Webapplicaties.Controllers
             if (game == null) return NotFound();
             _uow.GameRepository.Delete(game);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Wedstrijd is verwijderd";
             return RedirectToAction("EditOrDeleteGame");
         }
 
@@ -200,6 +217,7 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Referee>> AddReferee(Referee referee)
         {
             _uow.RefereeRepository.Create(referee);
@@ -217,11 +235,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditReferee(int id, Referee referee)
         {
             if (id != referee.RefereeId) return BadRequest();
             _uow.RefereeRepository.Update(referee);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{referee.Firstname} {referee.Name} is aangepast";
             return RedirectToAction("EditOrDeleteReferee");
         }
 
@@ -232,6 +252,7 @@ namespace Project_Webapplicaties.Controllers
             if (referee == null) return NotFound();
             _uow.RefereeRepository.Delete(referee);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{referee.Firstname} {referee.Name} is verwijderd";
             return RedirectToAction("EditOrDeleteReferee");
         }
 
@@ -246,13 +267,28 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Sponsor>> AddSponsor(AddSponsorViewModel vm)
         {
-            //var fileName = UploadFile(vm);
+            string path = Path.Combine(this._environment.WebRootPath, "Images");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            if (vm.SponsorImage != null)
+            {
+                string fileName = Path.GetFileName(vm.SponsorImage.FileName);
+                using (var stream = new FileStream(Path.Combine(path,fileName),FileMode.Create))
+                {
+                    stream.Position = 0;
+                    await vm.SponsorImage.CopyToAsync(stream);
+                }
+            }
             var sponsor = new Sponsor
             {
                 Name = vm.Name,
                 CompanyName = vm.CompanyName,
+                Image = vm.SponsorImage.FileName,
             };
             var id = await _sponsorRepository.Save(sponsor);
             List<TeamSponsor> teamSponsors = vm.Teams.Select(team => new TeamSponsor() { TeamId = team, SponsorId = id }).ToList();
@@ -260,22 +296,6 @@ namespace Project_Webapplicaties.Controllers
             TempData["SuccessMessage"] = $"Sponsor is toegevoegd";
             return RedirectToAction("AddSponsor");
         }
-
-        //private string UploadFile(AddSponsorViewModel vm)
-        //{
-        //    string fileName = "";
-        //    if (vm.SponsorImage != null)
-        //    {
-        //        string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
-        //        fileName = Guid.NewGuid().ToString() + "-" + vm.SponsorImage.FileName;
-        //        string filePath = Path.Combine(uploadDir, fileName);
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            vm.SponsorImage.CopyTo(fileStream);
-        //        }
-        //    }
-        //    return fileName;
-        //}
 
         public async Task<ActionResult<IEnumerable<Sponsor>>> EditOrDeleteSponsor()
         {
@@ -302,11 +322,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditSponsor(int id, Sponsor sponsor)
         {
             if (id != sponsor.SponsorId) return BadRequest();
             _uow.SponsorRepository.Update(sponsor);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Sponsor is aangepast";
             return RedirectToAction("EditOrDeleteSponsor");
         }
 
@@ -317,6 +339,7 @@ namespace Project_Webapplicaties.Controllers
             if (sponsor == null) return NotFound();
             _uow.SponsorRepository.Delete(sponsor);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Sponsor is verwijderd";
             return RedirectToAction("EditOrDeleteSponsor");
         }
 

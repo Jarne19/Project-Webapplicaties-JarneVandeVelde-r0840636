@@ -21,8 +21,13 @@ namespace Project_Webapplicaties.Controllers
         {
             TeamListViewModel team = new TeamListViewModel();
             team.Teams = _uow.TeamRepository.GetAll().ToList();
-            GameListViewModel vm = new GameListViewModel(team);
-            vm.Games = _uow.GameRepository.GetAll().Include(x=>x.Team).Include(x=>x.Referee).ToList();
+            GameListViewModel game = new GameListViewModel();
+            game.Games = _uow.GameRepository.GetAll().ToList();
+            SponsorListViewModel sponsor = new SponsorListViewModel();
+            sponsor.Sponsors = _uow.SponsorRepository.GetAll().ToList();
+            HomeListViewModel vm = new HomeListViewModel(team,game,sponsor);
+            //GameListViewModel vm = new GameListViewModel();
+            //vm.Games = _uow.GameRepository.GetAll().Include(x=>x.Team).Include(x=>x.Referee).ToList();
             return View(vm);
         }
 

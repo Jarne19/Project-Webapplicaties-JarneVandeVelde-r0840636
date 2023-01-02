@@ -16,6 +16,7 @@ namespace Project_Webapplicaties.ViewModels
         public PositionEnum Position { get; set; }
         [Required(ErrorMessage = "Beste been is verplicht")]
         public BestLegEnum BestLeg { get; set; }
+        [Required(ErrorMessage = "Team kiezen is verplicht")]
         public int? PloegId { get; set; }
 
     }

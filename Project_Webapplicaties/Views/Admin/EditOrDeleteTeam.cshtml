@@ -102,7 +102,7 @@
                                 <a asp-controller="Admin" asp-action="EditTeam" asp-route-id="@item.TeamId">Aanpassen</a>
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="DeleteTeam" asp-route-id="@item.TeamId">Verwijderen</a>
+                                <a asp-controller="Admin" asp-action="DeleteTeam" asp-route-id="@item.TeamId" onclick="return confirm('Zeker dat u @item.Name wilt verwijderen?')">Verwijderen</a>
                             </td>
                         </tr>
                     }
@@ -112,3 +112,20 @@
         </main>
     </div>
 </div>
+@section Scripts
+{
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+
+        $(document).ready(function() {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

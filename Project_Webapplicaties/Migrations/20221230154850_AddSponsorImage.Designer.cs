@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Webapplicaties.Data;
 
 namespace Project_Webapplicaties.Migrations
 {
     [DbContext(typeof(VwGerheideContext))]
-    partial class VwGerheideContextModelSnapshot : ModelSnapshot
+    [Migration("20221230154850_AddSponsorImage")]
+    partial class AddSponsorImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,10 +312,10 @@ namespace Project_Webapplicaties.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("SponsorImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SponsorId");

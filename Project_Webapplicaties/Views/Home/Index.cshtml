@@ -1,4 +1,4 @@
-﻿@model Project_Webapplicaties.ViewModels.GameListViewModel
+﻿@model Project_Webapplicaties.ViewModels.HomeListViewModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -15,37 +15,37 @@
     <h3 class="text-center mb-2 display-4">Wedstrijden</h3>
     <div class="row">
         @foreach (var item in Model.GetGames())
-            {
-                <div class="col-6 mt-3">
-                    <div class="card text-center shadow">
-                        <div class="card-header color nav-text">
-                            @item.PlayDate
-                        </div>
-                        <table class="table mt-3 table-bordered ">
-                            <tbody>
+        {
+            <div class="col-6 mt-3">
+                <div class="card text-center shadow">
+                    <div class="card-header color nav-text">
+                        @item.PlayDate
+                    </div>
+                    <table class="table mt-3 table-bordered ">
+                        <tbody>
                             <tr>
-                                <td >
+                                <td>
                                     -
-                                    <br/>
+                                    <br />
                                     <b>@Html.DisplayFor(modelItem => item.Team.Name)</b>
                                 </td>
                                 <td style="width: 260px">
                                     -
-                                    <br/>
+                                    <br />
                                     <b>@item.AwayTeam</b>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                        <div class="card-footer footer-color ">
-                            <a class="nav-text" asp-controller="Game" asp-action="Details" asp-route-id="@item.GameId" ><b>MatchDetails</b></a>
-                        </div>
+                        </tbody>
+                    </table>
+                    <div class="card-footer footer-color ">
+                        <a class="nav-text" asp-controller="Game" asp-action="Details" asp-route-id="@item.GameId"><b>MatchDetails</b></a>
                     </div>
                 </div>
-            }
+            </div>
+        }
     </div>
-        <div class="text-center"><a asp-controller="Game" asp-action="Index" type="button" class="btn btn-danger mt-4 nav-text">Meer wedstrijden</a></div>
-</div>
+    <div class="text-center"><a asp-controller="Game" asp-action="Index" type="button" class="btn btn-danger mt-4 nav-text">Meer wedstrijden</a></div>
+</div>df
 <div class="jumbotron footer-color mt-4">
     <div class="container ">
         <h3 class="text-center mb-3 nav-text display-4">Teams</h3>
@@ -59,7 +59,7 @@
                             <h5 class="card-title"><b>@item.Name</b></h5>
                             <p class="card-text">@item.Division</p>
                             <hr />
-                            <a class="btn btn-danger" asp-controller="Team" asp-action="Details" asp-route-id="@item.TeamId">Ploeg bekijken</a>
+                            <a class="btn btn-danger" asp-controller="Team" asp-action="Details" asp-route-id="@item.TeamId">Team bekijken</a>
                         </div>
                     </div>
                 </div>
@@ -69,48 +69,19 @@
     </div>
 </div>
 <div class="container">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <img src="/Images/Croonen-Nissan-logo.jpg" class="d-block w-50" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="Images/2560px-Nyrstar_logo.svg.png" class="d-block w-75" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="Images/saller.png" class="d-block w-75" alt="...">
+    <h1 class="display-4 text-center mb-4">Hoofdsponsers</h1>
+    <div class="row">
+        @foreach (var item in @Model.GetSponsors())
+        {
+            <div class="col-sm m-2 mb-5">
+                <div class="card shadow" style="width: 20rem;">
+                    <img src="~/Images/@item.Image" class="card-img-top" height="250" alt="@item.CompanyName">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>@item.CompanyName</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <img src="/Images/Croonen-Nissan-logo.jpg" class="d-block w-50" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="Images/2560px-Nyrstar_logo.svg.png" class="d-block w-75" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="Images/saller.png" class="d-block w-75" alt="...">
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col-md-4 text-center center-img">
-                        <img src="/Images/Croonen-Nissan-logo.jpg" class="d-block w-50" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center center-img">
-                        <img src="Images/2560px-Nyrstar_logo.svg.png" class="d-block w-75" alt="...">
-                    </div>
-                    <div class="col-md-4 text-center center-img">
-                        <img src="Images/saller.png" class="d-block w-75" alt="...">
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>
 

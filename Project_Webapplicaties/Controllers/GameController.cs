@@ -17,9 +17,7 @@ namespace Project_Webapplicaties.Controllers
         }
         public IActionResult Index()
         {
-            TeamListViewModel team = new TeamListViewModel();
-            team.Teams = _uow.TeamRepository.GetAll().ToList();
-            GameListViewModel vm = new GameListViewModel(team);
+            GameListViewModel vm = new GameListViewModel();
             vm.Games = _uow.GameRepository.GetAll().Include(x=>x.Referee).Include(x=>x.Team).OrderBy(x=>x.PlayDate).ToList();
             return View(vm);
         }
@@ -44,9 +42,7 @@ namespace Project_Webapplicaties.Controllers
             }
             else
             {
-                TeamListViewModel team = new TeamListViewModel();
-                team.Teams = _uow.TeamRepository.GetAll().ToList();
-                GameListViewModel viewModel = new GameListViewModel(team);
+                GameListViewModel viewModel = new GameListViewModel();
                 viewModel.Games = _uow.GameRepository.GetAll().ToList();
                 return View(string.Empty, viewModel);
             }
