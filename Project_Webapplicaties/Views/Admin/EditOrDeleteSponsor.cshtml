@@ -1,4 +1,6 @@
-﻿@model List<TeamSponsor>
+﻿@using System.Security.Cryptography.X509Certificates
+@using Microsoft.EntityFrameworkCore
+@model List<Sponsor>
 
 @{
     ViewData["Title"] = "Sponser aanpassen of verwijderen";
@@ -7,7 +9,7 @@
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="sidebar-sticky">
-               <ul class="nav flex-column">
+                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Index">
                             <span data-feather="home"></span>
@@ -80,10 +82,13 @@
                 <table class="table table-light mt-5 shadoww">
                     <thead>
                     <tr>
-                        <th scope="col"><b>Sponser Id</b></th>
-                        <th scope="col"><b>Naam vab sponser</b></th>
-                        <th scope="col"><b>Naam van bedrijf</b></th>
-                        <th scope="col"><b>Teams die gesponserd worden</b></th>
+                        <th>
+                            Sponser id</th>
+                        <th scope="col">
+                            Naam</th>
+                        <th scope="col">
+                            naam bedrijf</th>
+                        <th scope="col">Gesponserde teams</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,22 +96,22 @@
                     {
                         <tr>
                             <td>
-                                @item.TeamSponsorId
+                                @Html.DisplayFor(modelItem=>item.SponsorId)
                             </td>
                             <td>
-                                @item.Sponsor.Name
+                                @Html.DisplayFor(modelItem=>item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Sponsor.CompanyName)
+                                @Html.DisplayFor(modelItem=>item.CompanyName)
                             </td>
                             <td>
-                                @item.Team.Name
+                                @Html.DisplayFor(modelItem=>item.TeamSponsors.Count)
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.SponsorId">Aanpassen</a>
+                                <a asp-controller="Admin" asp-action="EditSponsor" asp-route-id="@item.SponsorId">Aanpassen</a>
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.SponsorId">Verwijderen</a>
+                                <a asp-controller="Admin" asp-action="DeleteSponsor" asp-route-id="@item.SponsorId" onclick="return confirm('Zeker dat u de sponsor wilt verwijderen?')">Verwijderen</a>
                             </td>
                         </tr>
                     }
@@ -116,3 +121,20 @@
         </main>
     </div>
 </div>
+@section Scripts
+{
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+
+        $(document).ready(function() {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

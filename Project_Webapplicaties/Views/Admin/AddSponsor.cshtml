@@ -76,7 +76,7 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 jumbotron-img2">
             <div class=" pt-3 pb-2 m-5 shadoww">
                 <h3 class="mb-5 display-4">Sponser toevoegen</h3>
-                <form asp-action="AddSponsor">
+                <form asp-action="AddSponsor" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
                             <label asp-for="Name">Naam van sponser</label>
@@ -89,10 +89,14 @@
                             <span asp-validation-for="CompanyName" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label asp-for="TeamSponsors">Welk team sponseren</label>
-                            <select asp-for="TeamSponsors" asp-items="ViewBag.Teams" class="form-control">
+                            <label asp-for="SponsorImage">Foto</label>
+                            <input asp-for="SponsorImage" type="file" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Teams">Welk team sponseren</label>
+                            <select asp-for="@Model.Teams" multiple="multiple" asp-items="ViewBag.Teams" class="form-control">
                             </select>
-                            <span asp-validation-for="TeamSponsors" class="text-danger"></span>
+                            <span asp-validation-for="Teams" class="text-danger"></span>
                         </div>
                     </div>
                     <button type="submit" value="AddSponsor" class="btn btn-danger mt-3">Aanmaken</button>
@@ -104,5 +108,18 @@
 
 @section Scripts
 {
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+
+        $(document).ready(function() {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

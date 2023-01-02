@@ -33,7 +33,7 @@ namespace Project_Webapplicaties
         {
             services.AddControllersWithViews();
             services.AddDbContext<VwGerheideContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("ProjectConnection")));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<VwGerheideContext>();
             services.AddRazorPages();
             services.Configure<IdentityOptions>(options =>
@@ -63,9 +63,9 @@ namespace Project_Webapplicaties
 
 
 
+            services.AddScoped<ITeamSponsorRepository, TeamSponsorRepository>();
+            services.AddScoped<ISponsorRepository, SponsorRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
-            services.AddScoped<ITeamRepository, TeamRepository>();
-            services.AddScoped<IRefereeRepository, RefereeRepository>();
             services.AddScoped<IGenericRepository<Player>, GenericRepository<Player>>();
             services.AddScoped<IGenericRepository<Team>, GenericRepository<Team>>();
             services.AddScoped<IGenericRepository<Game>, GenericRepository<Game>>();

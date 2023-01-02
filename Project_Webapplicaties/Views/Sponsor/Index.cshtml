@@ -1,0 +1,23 @@
+﻿@model Project_Webapplicaties.ViewModels.SponsorListViewModel
+@{
+    ViewData["Title"] = "Sponsors";
+}
+<div class="jumbotron-img2">
+    <div class="container shadoww">
+        <h3 class="mb-5 display-4">Sponsors</h3>
+
+        <div class="row">
+            @foreach (var item in Model.Sponsors)
+            {
+                <div class="col-sm m-2 mb-5">
+                    <div class="card shadow" style="width: 16rem;">
+                        <img src="/Images/@item.Image" class="card-img-top" alt="..." height="200">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>@item.CompanyName</b></h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

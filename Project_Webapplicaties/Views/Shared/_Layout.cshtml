@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/VwGerheide.css" />
     <link rel="icon" type="image/png" sizes="32x32"
-          href="~/img/LogoVwGerheide.png">
+          href="~/Images/LogoVwGerheide.png">
     <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark color">
         <div class="container ">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/LogoVwGerheide.png" height="60" /></a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/LogoVwGerheide.png" height="60" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,10 +34,7 @@
                         <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
+                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
                     </li>
                     @if (this.User.Identity.IsAuthenticated)
                     {
@@ -51,25 +49,11 @@
     <main role="main">
         <div id="myModalSuccess" class="modal fade text-width:30%;" role="dialog">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Informatie</h2>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div id="MyModalSuccessAlertBody" class="modal-body alert alert-success">
-                        Gelukt!
-                    </div>
-                    <div class="modal-footer">
-                        &nbsp;
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Sluiten</button>
-                    </div>
+                <div id="MyModalSuccessAlertBody" class="modal-body alert alert-success">
+                    Gelukt!
                 </div>
             </div>
         </div>
-        
-        
-        
-
         @RenderBody()
     </main>
     <footer class="pt-4  footer-color">
@@ -80,7 +64,7 @@
                     <p class="nav-text">Gerheide (Kapel)<br />2490 Balen</p>
                 </div>
                 <div class="col-md-5">
-                    <img class="" src="/img/LogoVwGerheide.png" height="85" />
+                    <img class="" src="/Images/LogoVwGerheide.png" height="85" />
                 </div>
                 <div class="col-md-2 align-items-lg-end">
                     <ul class="list-unstyled">
@@ -94,10 +78,7 @@
                             <a class="nav-text" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
                         </li>
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sponsors</a>
-                        </li>
-                        <li>
-                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Privacy">Over ons</a>
+                            <a class="nav-text" asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
                         </li>
                     </ul>
                 </div>

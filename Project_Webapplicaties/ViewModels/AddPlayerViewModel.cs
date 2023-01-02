@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Project_Webapplicaties.Models.Enums;
 
 namespace Project_Webapplicaties.ViewModels
@@ -18,6 +16,7 @@ namespace Project_Webapplicaties.ViewModels
         public PositionEnum Position { get; set; }
         [Required(ErrorMessage = "Beste been is verplicht")]
         public BestLegEnum BestLeg { get; set; }
+        [Required(ErrorMessage = "Team kiezen is verplicht")]
         public int? PloegId { get; set; }
 
     }

@@ -99,7 +99,7 @@
                             <br/>
                             <label asp-for="PloegId">Ploeg</label>
                             <select asp-for="PloegId" asp-items="ViewBag.Teams" class="form-control">
-                                <option value="">-- Positie selecteren --</option>
+                                
                             </select>
                             <span asp-validation-for="Position" class="text-danger"></span>
                         </div>
@@ -118,7 +118,7 @@
                             <span asp-validation-for="BestLeg" class="text-danger"></span>
                         </div>
                     </div>
-                    <input type="submit" value="EditPlayer" title="Aanpassen" name="Aanpassen" class="btn btn-danger" />
+                    <input type="submit" value="Aanpassen" title="Aanpassen" name="Aanpassen" class="btn btn-danger" />
                 }
             </div>
         </main>
@@ -127,7 +127,18 @@
 
 @section Scripts
 {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+
+        $(document).ready(function() {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

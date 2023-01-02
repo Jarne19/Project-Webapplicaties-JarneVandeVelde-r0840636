@@ -7,7 +7,7 @@
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="sidebar-sticky">
-               <ul class="nav flex-column">
+                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Index">
                             <span data-feather="home"></span>
@@ -110,7 +110,7 @@
                                 <a asp-controller="Admin" asp-action="EditPlayer" asp-route-id="@item.PlayerId">Aanpassen</a>
                             </td>
                             <td>
-                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.PlayerId">Verwijderen</a>
+                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@item.PlayerId" onclick="return confirm('Zeker dat u de @item.GetFullName wilt verwijderen?')">Verwijderen</a>
                             </td>
                         </tr>
                     }
@@ -120,3 +120,20 @@
         </main>
     </div>
 </div>
+@section Scripts
+{
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+
+        $(document).ready(function() {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

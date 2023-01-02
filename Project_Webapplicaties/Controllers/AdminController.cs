@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Definux.Utilities.Objects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.Repository.Interfaces;
@@ -21,13 +20,18 @@ namespace Project_Webapplicaties.Controllers
     public class AdminController : Controller
     {
         private readonly IUnitOfWork _uow;
-        private readonly ITeamRepository _teamRepository;
-        private readonly IRefereeRepository _refereeRepository;
-        public AdminController(IUnitOfWork uow, ITeamRepository teamRepository, IRefereeRepository refereeRepository)
+        private readonly VwGerheideContext _context;
+        private readonly ISponsorRepository _sponsorRepository;
+        private readonly ITeamSponsorRepository _teamSponsorRepository;
+        private readonly IWebHostEnvironment _environment;
+
+        public AdminController(IUnitOfWork uow, VwGerheideContext context, ISponsorRepository sponsorRepository, ITeamSponsorRepository teamSponsorRepository,IWebHostEnvironment environment)
         {
             _uow = uow;
-            _teamRepository = teamRepository;
-            _refereeRepository = refereeRepository;
+            _context = context;
+            _sponsorRepository = sponsorRepository;
+            _teamSponsorRepository = teamSponsorRepository;
+            _environment = environment;
         }
         public IActionResult Index()
         {
@@ -41,13 +45,8 @@ namespace Project_Webapplicaties.Controllers
             ViewBag.Teams = GetTeams();
             return View();
         }
-        public async Task<ActionResult<IEnumerable<Player>>> EditOrDeletePlayer()
-        {
-            var player = await _uow.PlayerRepository.GetAll().Include(x => x.Team).ToListAsync();
-            return View(player);
-        }
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Player>> AddPlayer(Player player)
         {
             _uow.PlayerRepository.Create(player);
@@ -55,7 +54,11 @@ namespace Project_Webapplicaties.Controllers
             TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is toegevoegd";
             return RedirectToAction("AddPlayer");
         }
-
+        public async Task<ActionResult<IEnumerable<Player>>> EditOrDeletePlayer()
+        {
+            var player = await _uow.PlayerRepository.GetAll().Include(x => x.Team).ToListAsync();
+            return View(player);
+        }
         [HttpGet]
         public async Task<ActionResult<Player>> EditPlayer(int id)
         {
@@ -66,11 +69,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPlayer(int id, Player player)
         {
             if (id != player.PlayerId) return BadRequest();
             _uow.PlayerRepository.Update(player);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is aangepast";
             return RedirectToAction("EditOrDeletePlayer");
         }
 
@@ -81,6 +86,7 @@ namespace Project_Webapplicaties.Controllers
             if (player == null) return NotFound();
             _uow.PlayerRepository.Delete(player);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{player.Firstname} {player.Name} is verwijderd";
             return RedirectToAction("EditOrDeletePlayer");
         }
 
@@ -99,10 +105,12 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Team>> AddTeam(Team team)
         {
             _uow.TeamRepository.Create(team);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{team.Name} is toegevoegd";
             return RedirectToAction("AddTeam");
         }
 
@@ -115,11 +123,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditTeam(int id, Team team)
         {
             if (id != team.TeamId) return BadRequest();
             _uow.TeamRepository.Update(team);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{team.Name} is aangepast";
             return RedirectToAction("EditOrDeleteTeam");
         }
 
@@ -130,6 +140,7 @@ namespace Project_Webapplicaties.Controllers
             if (team == null) return NotFound();
             _uow.TeamRepository.Delete(team);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{team.Name} is verwijderd";
             return RedirectToAction("EditOrDeleteTeam");
         }
 
@@ -145,15 +156,17 @@ namespace Project_Webapplicaties.Controllers
         }
         public async Task<ActionResult<IEnumerable<Game>>> EditOrDeleteGame()
         {
-            var game = await _uow.GameRepository.GetAll().Include(x=>x.Team).Include(x=>x.Referee).ToListAsync();
+            var game = await _uow.GameRepository.GetAll().Include(x => x.Team).Include(x => x.Referee).ToListAsync();
             return View(game);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Game>> AddGame(Game game)
         {
             _uow.GameRepository.Create(game);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Wedstrijd is toegevoegd";
             return RedirectToAction("AddGame");
         }
 
@@ -168,11 +181,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditGame(int id, Game game)
         {
             if (id != game.GameId) return BadRequest();
             _uow.GameRepository.Update(game);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Wedstrijd is aangepast";
             return RedirectToAction("EditOrDeleteGame");
         }
 
@@ -183,6 +198,7 @@ namespace Project_Webapplicaties.Controllers
             if (game == null) return NotFound();
             _uow.GameRepository.Delete(game);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Wedstrijd is verwijderd";
             return RedirectToAction("EditOrDeleteGame");
         }
 
@@ -201,10 +217,12 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Referee>> AddReferee(Referee referee)
         {
             _uow.RefereeRepository.Create(referee);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{referee.Firstname} {referee.Name} is toegevoegd";
             return RedirectToAction("AddReferee");
         }
 
@@ -217,11 +235,13 @@ namespace Project_Webapplicaties.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditReferee(int id, Referee referee)
         {
             if (id != referee.RefereeId) return BadRequest();
             _uow.RefereeRepository.Update(referee);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{referee.Firstname} {referee.Name} is aangepast";
             return RedirectToAction("EditOrDeleteReferee");
         }
 
@@ -232,6 +252,7 @@ namespace Project_Webapplicaties.Controllers
             if (referee == null) return NotFound();
             _uow.RefereeRepository.Delete(referee);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"{referee.Firstname} {referee.Name} is verwijderd";
             return RedirectToAction("EditOrDeleteReferee");
         }
 
@@ -244,51 +265,70 @@ namespace Project_Webapplicaties.Controllers
             ViewBag.Teams = GetTeams();
             return View();
         }
-        public async Task<ActionResult<IEnumerable<Sponsor>>> EditOrDeleteSponsor()
-        {
-            //var sponsor = await _uow.SponsorRepository.GetAll().Include(x=>x.TeamSponsors).ThenInclude(x=>x.Team).ToListAsync();
-            var teamSponsor = await _uow.TeamSponsorRepository.GetAll().Include(x => x.Sponsor).Include(x => x.Team)
-                .ToListAsync();
-            return View(teamSponsor);
-        }
 
         [HttpPost]
-        public async Task<ActionResult<Sponsor>> AddSponsor(Sponsor sponsor)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Sponsor>> AddSponsor(AddSponsorViewModel vm)
         {
-            //var sponser = new Sponsor();
-            //sponser.Name = teamsSponsor.Sponsor.Name;
-            //sponser.CompanyName = teamsSponsor.Sponsor.CompanyName;
-            //_uow.SponsorRepository.Create(sponser);
-            //foreach (var TeamId in teamsSponsor.Sponsor.TeamSponsors)
-            //{
-            //    var teamSponsor = new TeamSponsor();
-            //    teamSponsor.Sponsor = sponser;
-            //    teamSponsor.TeamId = TeamId.TeamId;
-            //    _uow.TeamSponsorRepository.Create(teamSponsor);
-            //}
-
-            //await _uow.Save();
-
-            _uow.SponsorRepository.Create(sponsor);
-            await _uow.Save();
+            string path = Path.Combine(this._environment.WebRootPath, "Images");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            if (vm.SponsorImage != null)
+            {
+                string fileName = Path.GetFileName(vm.SponsorImage.FileName);
+                using (var stream = new FileStream(Path.Combine(path,fileName),FileMode.Create))
+                {
+                    stream.Position = 0;
+                    await vm.SponsorImage.CopyToAsync(stream);
+                }
+            }
+            var sponsor = new Sponsor
+            {
+                Name = vm.Name,
+                CompanyName = vm.CompanyName,
+                Image = vm.SponsorImage.FileName,
+            };
+            var id = await _sponsorRepository.Save(sponsor);
+            List<TeamSponsor> teamSponsors = vm.Teams.Select(team => new TeamSponsor() { TeamId = team, SponsorId = id }).ToList();
+            await _teamSponsorRepository.Save(teamSponsors);
+            TempData["SuccessMessage"] = $"Sponsor is toegevoegd";
             return RedirectToAction("AddSponsor");
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Sponsor>> EditSponsor(int id)
+        public async Task<ActionResult<IEnumerable<Sponsor>>> EditOrDeleteSponsor()
+        {
+            var sponsor = await _uow.SponsorRepository.GetAll().Include(x=>x.TeamSponsors).ThenInclude(x=>x.Team).ToListAsync();
+            return View(sponsor);
+        }
+        
+        public async Task<IActionResult> EditSponsor(int? id)
         {
             ViewBag.Teams = GetTeams();
-            var sponsor = await _uow.SponsorRepository.GetById(id);
-            if (sponsor == null) return NotFound();
-            return View(sponsor);
+            if (id == null)
+                return NotFound();
+            var sponsor = await _context.Sponsors.FindAsync(id);
+            if (sponsor == null) 
+                return NotFound();
+            EditSponsorViewModel viewModel = new EditSponsorViewModel()
+            {
+                SponsorId = sponsor.SponsorId,
+                Name = sponsor.Name,
+                CompanyName = sponsor.CompanyName,
+                Teams = new List<int> { sponsor.TeamSponsors.Count }
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditSponsor(int id, Sponsor sponsor)
         {
             if (id != sponsor.SponsorId) return BadRequest();
             _uow.SponsorRepository.Update(sponsor);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Sponsor is aangepast";
             return RedirectToAction("EditOrDeleteSponsor");
         }
 
@@ -299,44 +339,25 @@ namespace Project_Webapplicaties.Controllers
             if (sponsor == null) return NotFound();
             _uow.SponsorRepository.Delete(sponsor);
             await _uow.Save();
+            TempData["SuccessMessage"] = $"Sponsor is verwijderd";
             return RedirectToAction("EditOrDeleteSponsor");
         }
 
         #endregion
 
-        private List<SelectListItem> GetTeams()
+        private SelectList GetTeams()
         {
-            var teams = new List<SelectListItem>();
-            PaginatedList<Team> team = _teamRepository.GetTeams("Name", SortOrder.Ascending);
-            teams = team.Items.Select(x => new SelectListItem()
-            {
-                Value = x.TeamId.ToString(),
-                Text = x.Name
-            }).ToList();
-            var defItem = new SelectListItem()
-            {
-                Value = "",
-                Text = "-- Selecteer een team --"
-            };
-            teams.Insert(0, defItem);
-            return teams;
+            var teams = _uow.TeamRepository.GetAll().ToDictionary(t => t.TeamId, t => t.Name);
+            teams.Add(-1, "-- Selecteer een team --");
+            var list = new SelectList(teams.OrderBy(x => x.Key), "Key", "Value");
+            return list;
         }
-        private List<SelectListItem> GetReferees()
+        private SelectList GetReferees()
         {
-            var referees = new List<SelectListItem>();
-            PaginatedList<Referee> referee = _refereeRepository.GetReferee("Name", SortOrder.Ascending);
-            referees = referee.Items.Select(x => new SelectListItem()
-            {
-                Value = x.RefereeId.ToString(),
-                Text = $"{x.Firstname} {x.Name}"
-            }).ToList();
-            var defItem = new SelectListItem()
-            {
-                Value = "",
-                Text = "-- Selecteer een scheidsrechter --"
-            };
-            referees.Insert(0, defItem);
-            return referees;
+            var referees = _uow.RefereeRepository.GetAll().ToDictionary(r => r.RefereeId, r => r.Name);
+            referees.Add(-1, "-- Selecteer een scheidsrechter --");
+            var list = new SelectList(referees.OrderBy(x => x.Key), "Key", "Value");
+            return list;
         }
     }
 }

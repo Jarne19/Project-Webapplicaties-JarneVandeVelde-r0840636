@@ -44,7 +44,7 @@ namespace Project_Webapplicaties.Controllers
             {
                 GameListViewModel viewModel = new GameListViewModel();
                 viewModel.Games = _uow.GameRepository.GetAll().ToList();
-                return View("", viewModel);
+                return View(string.Empty, viewModel);
             }
         }
     }

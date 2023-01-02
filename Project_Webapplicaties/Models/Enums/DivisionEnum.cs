@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Razor.Language.Extensions;
-
-namespace Project_Webapplicaties.Models.Enums
+﻿namespace Project_Webapplicaties.Models.Enums
 {
     public enum DivisionEnum
     {

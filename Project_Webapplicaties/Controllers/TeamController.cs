@@ -39,7 +39,7 @@ namespace Project_Webapplicaties.Controllers
             {
                 TeamListViewModel model = new TeamListViewModel();
                 model.Teams = _uow.TeamRepository.GetAll().Include(x=>x.Players).ToList();
-                return View("",model);
+                return View(string.Empty,model);
             }
         }
     }

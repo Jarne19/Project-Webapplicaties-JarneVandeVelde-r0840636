@@ -13,5 +13,6 @@ namespace Project_Webapplicaties.ViewModels
             var game = Games.OrderBy(x=>x.PlayDate).Take(2).ToList();
             return game;
         }
+       
     }
 }

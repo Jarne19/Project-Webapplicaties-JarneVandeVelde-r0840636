@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Project_Webapplicaties.Data;
 using Project_Webapplicaties.Data.UnitOfWork.Interfaces;
 using Project_Webapplicaties.Models;
 using Project_Webapplicaties.ViewModels;
@@ -26,7 +24,6 @@ namespace Project_Webapplicaties.Controllers
 
         public IActionResult Details(int id)
         {
-            //var selectedTeam = model.PloegId;
             Player player = _uow.PlayerRepository.GetAll().Where(x=>x.PlayerId == id).Include(x=>x.Team).FirstOrDefault();
             if (player != null)
             {
@@ -45,7 +42,7 @@ namespace Project_Webapplicaties.Controllers
             {
                 PlayerListViewModel viewModel = new PlayerListViewModel();
                 viewModel.Players = _uow.PlayerRepository.GetAll().ToList();
-                return View("",viewModel);
+                return View(string.Empty,viewModel);
             }
         }
 

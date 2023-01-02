@@ -11,11 +11,15 @@
         <a id="manage" class="nav-link nav-text" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welkom Admin!</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-text" id="register" asp-area="Identity" asp-page="/Account/Register"><img src="img/add-user.png" height="25"/></a>
+        <a class="nav-link nav-text" id="register" asp-area="Identity" asp-page="/Account/Register"><span class="material-symbols-outlined">
+            person_add
+        </span></a>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link nav-text"><img height="25" src="img/logout.png"/></button>
+            <button id="logout" type="submit" class="nav-link btn btn-link nav-text"><span class="material-symbols-outlined">
+                logout
+            </span></button>
         </form>
     </li>
 }
