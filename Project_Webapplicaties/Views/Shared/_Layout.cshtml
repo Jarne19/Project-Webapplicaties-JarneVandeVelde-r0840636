@@ -25,21 +25,21 @@
                 <partial name="_LoginPartial" />
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2 " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link nav-text ml-2 " asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Team" asp-action="Index">Teams</a>
+                        <a class="nav-link nav-text ml-2" asp-controller="Team" asp-action="Index">Teams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
+                        <a class="nav-link nav-text ml-2" asp-controller="Player" asp-action="Index">Spelers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
+                        <a class="nav-link nav-text ml-2" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
                     </li>
                     @if (this.User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link nav-text ml-2" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                            <a class="nav-link nav-text ml-2" asp-controller="Admin" asp-action="Index">Admin</a>
                         </li>
                     }
                 </ul>
@@ -56,7 +56,7 @@
         </div>
         @RenderBody()
     </main>
-    <footer class="pt-4  footer-color">
+    <footer class="pt-4 footer  footer-color">
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
@@ -64,26 +64,26 @@
                     <p class="nav-text">Gerheide (Kapel)<br />2490 Balen</p>
                 </div>
                 <div class="col-md-5">
-                    <img class="" src="/Images/LogoVwGerheide.png" height="85" />
+                    <img class="ml-3" src="/Images/LogoVwGerheide.png" height="85" />
                 </div>
                 <div class="col-md-2 align-items-lg-end">
                     <ul class="list-unstyled">
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-text" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Team" asp-action="Index">Teams</a>
+                            <a class="nav-text" asp-controller="Team" asp-action="Index">Teams</a>
                         </li>
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Player" asp-action="Index">Spelers</a>
+                            <a class="nav-text" asp-controller="Player" asp-action="Index">Spelers</a>
                         </li>
                         <li>
-                            <a class="nav-text" asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
+                            <a class="nav-text" asp-controller="Sponsor" asp-action="Index">Sponsors</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <p class="text-lg-center nav-text">&copy; 2022 VW Gerheide</p>
+            <p class="text-center nav-text">&copy; 2022 VW Gerheide</p>
         </div>
     </footer>
 

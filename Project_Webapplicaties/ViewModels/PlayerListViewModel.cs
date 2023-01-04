@@ -8,10 +8,15 @@ namespace Project_Webapplicaties.ViewModels
     {
         public string PlayerSearch { get; set; }
         public List<Player> Players { get; set; }
+
+        public List<Player> GetPlayers()
+        {
+            return Players.OrderBy(x=>x.Name).ToList();
+        }
+
         public List<Player> GetVerdedigers()
         {
-            var verdedigers = Players.Where(x => x.Position == (Models.Enums.PositionEnum)1).ToList();
-            return verdedigers;
+            return Players.Where(x => x.Position == (Models.Enums.PositionEnum)1).ToList();
         }
     }
 }
